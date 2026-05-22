@@ -1,0 +1,1243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>GATE8 — Win From Anywhere</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="description" content="GATE8 — A mindset brand and movement built on one truth: no matter where you start, you can still cross the line first." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Archivo:wght@400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink: #0A0A0A;
+    --ink-2: #161618;
+    --ink-3: #232327;
+    --bone: #F4F1EC;
+    --bone-2: #E7E2D8;
+    --dirt: #8E8A82;
+    --dirt-deep: #4A4640;
+    --cyan: #16D4C6;
+    --magenta: #FF04FF;
+    --lime: #D2FF00;
+    --labs-a: #00F0F0; --labs-b: #0078F0;
+    --media-a: #F0F000; --media-b: #00F050;
+    --foundation-a: #F000F0; --foundation-b: #00F028;
+
+    --display: "Poppins", system-ui, sans-serif;
+    --sans: "Archivo", system-ui, sans-serif;
+    --serif: "Instrument Serif", Georgia, serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--ink); color: var(--bone); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+  html { scroll-behavior: smooth; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+
+  .container { width: 100%; max-width: 1480px; margin: 0 auto; padding: 0 48px; }
+
+  /* === Top nav === */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 16px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background .35s, border-color .35s, padding .25s;
+    border-bottom: 1px solid transparent;
+  }
+  .nav.solid { background: rgba(10,10,10,0.85); backdrop-filter: blur(18px); border-bottom-color: rgba(244,241,236,0.08); padding-top: 10px; padding-bottom: 10px; }
+  .nav .logo { height: 80px; display: block; transition: height .25s, opacity .2s; }
+  .nav.solid .logo { height: 40px; }
+  .nav .logo.light { position: absolute; opacity: 0; }
+  .nav.solid .logo.dark { opacity: 0; }
+  .nav.solid .logo.light { opacity: 1; }
+  .nav .logo-wrap { position: relative; display: flex; align-items: center; line-height: 0; }
+  .nav .logo { vertical-align: middle; }
+  .nav-links { display: flex; gap: 28px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); }
+  .nav-links a { transition: color .2s; }
+  .nav-links a:hover { color: var(--magenta); }
+  .nav.solid .nav-links { color: rgba(244,241,236,0.7); }
+  .nav.solid .nav-links a:hover { color: var(--cyan); }
+  .nav-cta { background: var(--lime); color: var(--ink); padding: 12px 18px; font-family: var(--display); font-weight: 700; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; transition: transform .2s, background .2s; display: inline-flex; align-items: center; gap: 8px; }
+  .nav-cta:hover { background: var(--bone); transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--lime); }
+
+  /* === Hero === */
+  .hero {
+    position: relative; height: 100vh; min-height: 720px; overflow: hidden;
+    background: var(--bone); color: var(--ink);
+    background-image:
+      linear-gradient(rgba(10,10,10,0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10,10,10,0.045) 1px, transparent 1px);
+    background-size: 64px 64px, 64px 64px;
+    background-position: 0 0, 0 0;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; display: none;
+    background-image: url('assets/shanaze-portrait-jersey.png');
+    background-size: cover; background-position: center 30%;
+    filter: grayscale(1) contrast(1.15) brightness(0.55);
+    will-change: transform;
+  }
+  .hero::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(244,241,236,0.55) 100%);
+    pointer-events: none;
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 180px 48px 60px;
+    height: 100%;
+    display: flex; flex-direction: column; justify-content: space-between;
+    max-width: 1480px; margin: 0 auto;
+  }
+  .hero-eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: 0.22em; color: var(--dirt-deep); display: flex; align-items: center; gap: 12px; }
+  .hero-eyebrow .blink { width: 8px; height: 8px; background: var(--lime); border-radius: 50%; animation: blink 1.4s ease-in-out infinite; }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  .hero h1 {
+    font-family: var(--display); font-weight: 800;
+    font-size: clamp(80px, 14vw, 240px);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    margin-top: 24px;
+  }
+  .hero h1 .offset {
+    position: relative; display: inline-block; color: var(--ink);
+  }
+  .hero h1 .offset::before, .hero h1 .offset::after {
+    content: attr(data-text);
+    position: absolute; inset: 0;
+    pointer-events: none;
+  }
+  .hero h1 .offset::before { color: var(--magenta); transform: translate(10px, 10px); z-index: -1; }
+  .hero h1 .offset::after  { color: var(--cyan);    transform: translate(-10px, -10px); z-index: -1; }
+
+  .hero-tag {
+    font-family: var(--serif); font-style: italic;
+    font-size: clamp(20px, 2.2vw, 32px); line-height: 1.1; max-width: 760px;
+    color: var(--ink); margin-top: 24px;
+  }
+
+  /* Lane strip */
+  .lane-strip {
+    display: grid; grid-template-columns: repeat(8, 1fr);
+    border-top: 1px solid rgba(10,10,10,0.18);
+    margin-top: 36px;
+  }
+  .lane-strip > div {
+    padding: 14px 12px; border-right: 1px solid rgba(10,10,10,0.10);
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em; color: rgba(10,10,10,0.55);
+    display: flex; align-items: center; gap: 10px;
+    position: relative;
+  }
+  .lane-strip > div:last-child { border-right: 0; color: var(--ink); background: var(--lime); }
+  .lane-strip > div:last-child::before {
+    content: ""; position: absolute; top: -1px; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--magenta), var(--cyan));
+  }
+  .lane-strip .num { font-family: var(--display); font-weight: 700; font-size: 18px; color: var(--ink); letter-spacing: -0.02em; }
+  .lane-strip > div:last-child .num { color: var(--ink); }
+
+  /* Scroll cue */
+  .scroll-cue {
+    position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+    z-index: 3; font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em; color: rgba(10,10,10,0.6);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+  }
+  .scroll-cue .bar { width: 1px; height: 36px; background: linear-gradient(to bottom, transparent, var(--ink)); animation: drop 1.6s ease-in-out infinite; }
+  @keyframes drop { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+
+  /* === Marquee === */
+  .marquee {
+    background: var(--bone); color: var(--ink);
+    padding: 28px 0; overflow: hidden;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+  }
+  .marquee.dark { background: var(--ink); color: var(--bone); border-color: rgba(244,241,236,0.15); }
+  .marquee.lime { background: var(--lime); color: var(--ink); }
+  .marquee-track {
+    display: flex; gap: 56px; white-space: nowrap;
+    font-family: var(--display); font-weight: 800; font-size: clamp(48px, 7vw, 110px);
+    letter-spacing: -0.03em; text-transform: uppercase;
+    animation: marquee 28s linear infinite;
+  }
+  .marquee-track > span { display: inline-flex; align-items: center; gap: 56px; }
+  .marquee-track .dot { width: 18px; height: 18px; background: currentColor; border-radius: 50%; flex-shrink: 0; }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .marquee.dark .marquee-track .accent { color: var(--lime); }
+
+  /* === Manifesto === */
+  .manifesto {
+    background: var(--bone); color: var(--ink);
+    padding: 140px 0;
+  }
+  .manifesto-grid { display: grid; grid-template-columns: 0.4fr 1fr; gap: 48px; align-items: start; }
+  .section-eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--dirt); display: flex; align-items: center; gap: 12px; }
+  .section-eyebrow::before { content: ""; width: 28px; height: 1px; background: currentColor; }
+  .manifesto h2 {
+    font-family: var(--display); font-weight: 800;
+    font-size: clamp(40px, 5.5vw, 96px);
+    line-height: 0.96; letter-spacing: -0.025em; text-transform: uppercase;
+    color: var(--ink); margin-bottom: 28px;
+  }
+  .manifesto h2 em { font-style: normal; color: var(--ink); -webkit-text-stroke: 2px var(--ink); -webkit-text-fill-color: var(--bone); padding: 0 4px; }
+  .manifesto p { font-family: var(--serif); font-style: italic; font-size: 32px; line-height: 1.18; color: var(--ink-3); max-width: 820px; }
+  .manifesto p + p { margin-top: 24px; }
+  .manifesto p strong { font-style: normal; font-family: var(--sans); font-weight: 800; color: var(--ink); }
+
+  /* === Lane counter (1-8) === */
+  .lane-counter {
+    background: var(--ink); color: var(--bone);
+    padding: 120px 0;
+    border-top: 1px solid var(--ink-3);
+  }
+  .lane-counter h2 {
+    font-family: var(--display); font-weight: 700; font-size: clamp(36px, 4.5vw, 72px); line-height: 1.0; letter-spacing: -0.02em; text-transform: uppercase;
+    margin: 24px 0 56px;
+  }
+  .lc-row { display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px; height: 280px; align-items: end; }
+  .lc-cell {
+    border-top: 1px solid rgba(244,241,236,0.12);
+    height: 100%;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    position: relative; overflow: hidden;
+  }
+  .lc-cell .fill {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    background: rgba(244,241,236,0.06);
+    height: 0%;
+    transition: height 1.2s cubic-bezier(.2,.7,.2,1);
+  }
+  .lc-cell.eight .fill {
+    background: linear-gradient(180deg, var(--lime), color-mix(in oklch, var(--lime), var(--magenta) 25%));
+  }
+  .lc-cell .n {
+    position: relative; z-index: 2;
+    font-family: var(--display); font-weight: 800; font-size: clamp(48px, 6vw, 110px); line-height: 0.95; padding: 8px 12px; letter-spacing: -0.04em;
+    color: var(--bone);
+  }
+  .lc-cell.eight .n { color: var(--ink); text-shadow: 4px 4px 0 var(--magenta), -4px -4px 0 var(--cyan); }
+  .lc-cell .lbl { position: relative; z-index: 2; font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em; padding: 10px 12px 14px; color: rgba(244,241,236,0.55); border-top: 1px solid rgba(244,241,236,0.1); }
+  .lc-cell.eight .lbl { color: var(--ink); border-color: rgba(10,10,10,0.2); }
+  .lc-caption {
+    margin-top: 32px;
+    font-family: var(--serif); font-style: italic; font-size: 26px; max-width: 700px; color: rgba(244,241,236,0.75);
+  }
+  .lc-caption em { color: var(--lime); font-style: italic; }
+
+  /* === Pinned pillars === */
+  .pillars-pin { position: relative; }
+  .pillars-pin .stage {
+    position: sticky; top: 0; height: 100vh;
+    overflow: hidden;
+    background: var(--ink);
+    display: flex; align-items: stretch;
+  }
+  .pillars-track {
+    display: flex; height: 100%;
+    width: 300vw;
+    will-change: transform;
+  }
+  .pillar-panel {
+    flex: 0 0 100vw;
+    height: 100%;
+    padding: 100px 48px 60px;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .pillar-panel.labs       { background: linear-gradient(135deg, #021a26 0%, #050810 60%, #0a0a0a 100%); }
+  .pillar-panel.media      { background: linear-gradient(135deg, #1a1a05 0%, #050810 60%, #0a0a0a 100%); }
+  .pillar-panel.foundation { background: linear-gradient(135deg, #1a0518 0%, #050810 60%, #0a0a0a 100%); }
+  .pillar-panel::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(244,241,236,0.025) 0 1px, transparent 1px 80px),
+      repeating-linear-gradient(90deg, rgba(244,241,236,0.025) 0 1px, transparent 1px 80px);
+    pointer-events: none;
+  }
+  .pillar-num {
+    position: absolute; top: 80px; right: 48px;
+    font-family: var(--display); font-weight: 800; font-size: clamp(160px, 18vw, 320px); line-height: 0.85; letter-spacing: -0.05em;
+    color: rgba(244,241,236,0.04);
+    pointer-events: none;
+  }
+  .pillar-left { position: relative; z-index: 2; }
+  .pillar-left .lockup { height: 110px; margin-bottom: 28px; }
+  .pillar-left .tag { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; }
+  .pillar-left h3 {
+    font-family: var(--display); font-weight: 800; font-size: clamp(44px, 5.5vw, 88px); line-height: 0.96; text-transform: uppercase; letter-spacing: -0.025em;
+    margin: 22px 0 24px;
+  }
+  .pillar-left p { font-family: var(--serif); font-style: italic; font-size: 26px; line-height: 1.18; max-width: 560px; color: rgba(244,241,236,0.85); }
+  .pillar-left ul { margin-top: 24px; display: grid; gap: 12px; max-width: 540px; }
+  .pillar-left ul li { font-family: var(--sans); font-size: 14px; line-height: 1.5; padding-left: 24px; position: relative; color: rgba(244,241,236,0.8); }
+  .pillar-left ul li::before { content: "▸"; position: absolute; left: 0; font-family: var(--mono); }
+  .labs .pillar-left ul li::before { color: var(--labs-a); }
+  .media .pillar-left ul li::before { color: var(--media-a); }
+  .foundation .pillar-left ul li::before { color: var(--foundation-a); }
+
+  .pillar-right { position: relative; z-index: 2; aspect-ratio: 4/5; max-height: 70vh; }
+  .pillar-right .frame {
+    position: absolute; inset: 0; overflow: hidden; background: var(--ink-2);
+  }
+  .pillar-right .frame img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.1); }
+  .pillar-right .echo {
+    position: absolute; inset: 0; pointer-events: none;
+    border: 2px solid; mix-blend-mode: screen;
+  }
+  .labs .pillar-right .echo.a { border-color: var(--labs-a); transform: translate(-12px, -12px); }
+  .labs .pillar-right .echo.b { border-color: var(--labs-b); transform: translate(12px, 12px); }
+  .media .pillar-right .echo.a { border-color: var(--media-a); transform: translate(-12px, -12px); }
+  .media .pillar-right .echo.b { border-color: var(--media-b); transform: translate(12px, 12px); }
+  .foundation .pillar-right .echo.a { border-color: var(--foundation-a); transform: translate(-12px, -12px); }
+  .foundation .pillar-right .echo.b { border-color: var(--foundation-b); transform: translate(12px, 12px); }
+  .pillar-right .meta {
+    position: absolute; bottom: 16px; left: 16px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; padding: 6px 10px;
+    background: rgba(10,10,10,0.7); color: var(--bone);
+  }
+
+  /* Pillar progress dots */
+  .pillar-progress {
+    position: absolute; bottom: 32px; right: 48px;
+    display: flex; gap: 14px; z-index: 5;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em; color: rgba(244,241,236,0.5);
+  }
+  .pillar-progress .dot { display: flex; align-items: center; gap: 8px; transition: color .3s; }
+  .pillar-progress .dot::before { content: ""; width: 10px; height: 10px; border: 1px solid currentColor; }
+  .pillar-progress .dot.active { color: var(--bone); }
+  .pillar-progress .dot.active::before { background: var(--lime); border-color: var(--lime); }
+
+  /* === Problems === */
+  .problems { background: var(--bone); color: var(--ink); padding: 140px 0; }
+  .problems h2 { font-family: var(--display); font-weight: 800; font-size: clamp(40px, 5.5vw, 96px); line-height: 0.96; letter-spacing: -0.025em; text-transform: uppercase; margin: 24px 0 56px; }
+  .problems-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; border-top: 1px solid var(--ink); border-left: 1px solid var(--ink); }
+  .problem-cell {
+    padding: 28px 22px;
+    border-right: 1px solid var(--ink); border-bottom: 1px solid var(--ink);
+    display: flex; flex-direction: column; justify-content: space-between; gap: 18px;
+    min-height: 280px;
+    transition: background .25s, color .25s;
+  }
+  .problem-cell:hover { background: var(--ink); color: var(--bone); }
+  .problem-cell .num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; }
+  .problem-cell .title { font-family: var(--display); font-weight: 700; font-size: 22px; line-height: 1.0; letter-spacing: -0.02em; text-transform: uppercase; }
+  .problem-cell .body { font-family: var(--sans); font-size: 13px; line-height: 1.5; color: var(--dirt-deep); }
+  .problem-cell:hover .body { color: rgba(244,241,236,0.75); }
+
+  /* === Why now === */
+  .why-now { background: var(--ink); color: var(--bone); padding: 140px 0; position: relative; overflow: hidden; }
+  .why-now::before {
+    content: "WHY NOW";
+    position: absolute; top: 50%; left: -2%; transform: translateY(-50%);
+    font-family: var(--display); font-weight: 800; font-size: 32vw; line-height: 0.85; letter-spacing: -0.05em;
+    color: rgba(210,255,0,0.04); pointer-events: none;
+  }
+  .why-now-inner { position: relative; z-index: 2; }
+  .why-now h2 { font-family: var(--display); font-weight: 800; font-size: clamp(40px, 5.5vw, 96px); line-height: 0.96; letter-spacing: -0.025em; text-transform: uppercase; margin: 24px 0 64px; max-width: 1100px; }
+  .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+  .why-cell {
+    border-top: 1px solid rgba(244,241,236,0.18);
+    padding: 24px 0;
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .why-cell .marker { width: 8px; height: 8px; background: var(--lime); }
+  .why-cell h3 { font-family: var(--display); font-weight: 700; font-size: 22px; line-height: 1.1; text-transform: uppercase; letter-spacing: -0.015em; }
+  .why-cell p { font-family: var(--sans); font-size: 14px; line-height: 1.55; color: rgba(244,241,236,0.7); }
+
+  /* === Founder === */
+  .founder {
+    background: var(--bone); color: var(--ink);
+    padding: 0; position: relative; overflow: hidden;
+  }
+  .founder-grid { display: grid; grid-template-columns: 1fr 1fr; min-height: 90vh; }
+  .founder-img { position: relative; overflow: hidden; background: var(--ink); }
+  .founder-img img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.1); }
+  .founder-img .corner-mark {
+    position: absolute; bottom: 24px; left: 24px; width: 56px; height: 56px; background: var(--lime);
+  }
+  .founder-content { padding: 100px 64px; display: flex; flex-direction: column; justify-content: center; }
+  .founder-content .name { font-family: var(--display); font-weight: 800; font-size: clamp(56px, 7vw, 120px); line-height: 0.92; letter-spacing: -0.03em; text-transform: uppercase; }
+  .founder-content .title { font-family: var(--mono); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--dirt); margin-top: 12px; }
+  .founder-content .bio { font-family: var(--serif); font-style: italic; font-size: 24px; line-height: 1.22; margin: 32px 0; max-width: 540px; }
+  .founder-creds { display: grid; gap: 14px; max-width: 520px; }
+  .founder-creds .row { display: grid; grid-template-columns: 60px 1fr; gap: 14px; padding: 12px 0; border-top: 1px solid var(--ink); align-items: baseline; }
+  .founder-creds .row:last-child { border-bottom: 1px solid var(--ink); }
+  .founder-creds .num { font-family: var(--display); font-weight: 700; font-size: 26px; line-height: 1; letter-spacing: -0.02em; color: var(--ink); position: relative; }
+  .founder-creds .num::after { content: ""; position: absolute; right: 6px; bottom: 4px; width: 4px; height: 4px; background: var(--magenta); }
+  .founder-creds .label { font-family: var(--sans); font-size: 14px; line-height: 1.4; }
+
+  /* Quote ticker */
+  .ticker {
+    background: var(--ink); color: var(--bone); padding: 100px 0;
+    border-top: 1px solid var(--ink-3); border-bottom: 1px solid var(--ink-3);
+    overflow: hidden;
+  }
+  .ticker-quote {
+    font-family: var(--serif); font-style: italic; font-size: clamp(36px, 5vw, 80px); line-height: 1.05;
+    text-align: center; max-width: 1100px; margin: 0 auto; min-height: 240px;
+    display: flex; align-items: center; justify-content: center; padding: 0 32px;
+    transition: opacity .5s;
+  }
+  .ticker-quote .c { color: var(--cyan); }
+  .ticker-quote .m { color: var(--magenta); }
+  .ticker-quote .l { color: var(--lime); }
+  .ticker-controls { display: flex; justify-content: center; align-items: center; gap: 18px; margin-top: 20px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; color: rgba(244,241,236,0.6); }
+  .ticker-controls button {
+    background: transparent; color: inherit; border: 1px solid rgba(244,241,236,0.3); width: 38px; height: 38px;
+    font-family: var(--mono); cursor: pointer; transition: all .2s;
+  }
+  .ticker-controls button:hover { background: var(--lime); color: var(--ink); border-color: var(--lime); }
+
+  /* === Stats === */
+  .stats { background: var(--bone); color: var(--ink); padding: 140px 0; }
+  .stats h2 { font-family: var(--display); font-weight: 800; font-size: clamp(40px, 5.5vw, 96px); line-height: 0.96; letter-spacing: -0.025em; text-transform: uppercase; margin: 24px 0 64px; }
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--ink); }
+  .stat-cell {
+    padding: 36px 28px; border-right: 1px solid var(--ink);
+    display: flex; flex-direction: column; gap: 18px; min-height: 320px;
+  }
+  .stat-cell:last-child { border-right: 0; }
+  .stat-cell .lbl { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--dirt); }
+  .stat-cell .num { font-family: var(--display); font-weight: 800; font-size: clamp(64px, 7vw, 140px); line-height: 0.95; letter-spacing: -0.04em; color: var(--ink); position: relative; }
+  .stat-cell.echo .num { text-shadow: 5px 5px 0 var(--magenta), -5px -5px 0 var(--cyan); color: var(--bone); -webkit-text-stroke: 2px var(--ink); }
+  .stat-cell .desc { font-family: var(--sans); font-size: 14px; line-height: 1.5; margin-top: auto; }
+
+  /* === Demand === */
+  .demand { background: var(--ink); color: var(--bone); padding: 140px 0; }
+  .demand h2 { font-family: var(--display); font-weight: 800; font-size: clamp(40px, 5.5vw, 96px); line-height: 0.96; letter-spacing: -0.025em; text-transform: uppercase; margin: 24px 0 56px; max-width: 900px; }
+  .demand-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border-top: 1px solid var(--ink-3); border-left: 1px solid var(--ink-3); }
+  .demand-cell {
+    padding: 32px; border-right: 1px solid var(--ink-3); border-bottom: 1px solid var(--ink-3);
+    display: grid; grid-template-columns: 80px 1fr; gap: 24px; align-items: start;
+    transition: background .25s;
+  }
+  .demand-cell:hover { background: var(--ink-2); }
+  .demand-cell .icon { width: 56px; height: 56px; border: 1.5px solid var(--bone); display: flex; align-items: center; justify-content: center; font-family: var(--display); font-weight: 700; font-size: 22px; color: var(--bone); }
+  .demand-cell:nth-child(1) .icon { border-color: var(--cyan); color: var(--cyan); }
+  .demand-cell:nth-child(2) .icon { border-color: var(--magenta); color: var(--magenta); }
+  .demand-cell:nth-child(3) .icon { border-color: var(--lime); color: var(--lime); }
+  .demand-cell:nth-child(4) .icon { border-color: var(--bone); }
+  .demand-cell h3 { font-family: var(--display); font-weight: 700; font-size: 24px; line-height: 1.1; letter-spacing: -0.02em; text-transform: uppercase; }
+  .demand-cell p { font-family: var(--sans); font-size: 14px; line-height: 1.55; color: rgba(244,241,236,0.75); margin-top: 10px; }
+
+  /* === Funder value prop === */
+  .funder-value { background: var(--lime); color: var(--ink); padding: 140px 0; position: relative; overflow: hidden; }
+  .funder-value::before {
+    content: ""; position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(45deg, rgba(10,10,10,0.04) 0 12px, transparent 12px 24px);
+    pointer-events: none;
+  }
+  .funder-value-inner { position: relative; z-index: 2; }
+  .funder-value h2 { font-family: var(--display); font-weight: 800; font-size: clamp(40px, 5.5vw, 96px); line-height: 0.96; letter-spacing: -0.025em; text-transform: uppercase; margin: 24px 0 56px; max-width: 1100px; }
+  .funder-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .funder-cell {
+    background: var(--ink); color: var(--bone); padding: 28px;
+    display: flex; flex-direction: column; gap: 16px; min-height: 320px;
+    border-top: 4px solid var(--lime);
+    transition: transform .25s;
+  }
+  .funder-cell:hover { transform: translate(-4px, -4px); box-shadow: 8px 8px 0 var(--ink); }
+  .funder-cell .num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; color: rgba(244,241,236,0.6); }
+  .funder-cell h3 { font-family: var(--display); font-weight: 700; font-size: 24px; line-height: 1.05; letter-spacing: -0.02em; text-transform: uppercase; }
+  .funder-cell p { font-family: var(--sans); font-size: 13px; line-height: 1.55; color: rgba(244,241,236,0.75); }
+  .funder-cell ul { margin-top: 8px; display: grid; gap: 6px; }
+  .funder-cell ul li { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; color: rgba(244,241,236,0.7); padding-left: 14px; position: relative; }
+  .funder-cell ul li::before { content: "·"; position: absolute; left: 4px; }
+
+  /* === Media call === */
+  .media-call {
+    background: var(--ink); color: var(--bone);
+    padding: 0; position: relative; overflow: hidden;
+  }
+  .media-call-grid { display: grid; grid-template-columns: 1.2fr 1fr; min-height: 90vh; }
+  .media-call-content {
+    padding: 120px 64px; display: flex; flex-direction: column; justify-content: center;
+    position: relative;
+  }
+  .media-call-content .lockup { height: 80px; margin-bottom: 32px; align-self: flex-start; }
+  .media-call-content h2 { font-family: var(--display); font-weight: 800; font-size: clamp(48px, 6.5vw, 110px); line-height: 0.94; letter-spacing: -0.03em; text-transform: uppercase; }
+  .media-call-content h2 em { font-style: normal; color: var(--media-b); }
+  .media-call-content .lead { font-family: var(--serif); font-style: italic; font-size: 26px; line-height: 1.2; max-width: 580px; margin-top: 32px; color: rgba(244,241,236,0.92); }
+  .media-call-bullets { margin-top: 36px; display: grid; gap: 14px; max-width: 580px; }
+  .media-call-bullets .row { display: grid; grid-template-columns: 30px 1fr; align-items: baseline; gap: 16px; padding: 16px 0; border-top: 1px solid rgba(244,241,236,0.15); font-family: var(--sans); font-size: 15px; line-height: 1.5; color: rgba(244,241,236,0.85); }
+  .media-call-bullets .row:last-child { border-bottom: 1px solid rgba(244,241,236,0.15); }
+  .media-call-bullets .row .n { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; color: var(--media-a); }
+  .media-call-actions { margin-top: 40px; display: flex; gap: 14px; flex-wrap: wrap; }
+
+  .media-call-visual {
+    position: relative; overflow: hidden;
+    background: var(--ink-2);
+  }
+  .media-call-visual img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.1); }
+  .media-call-visual::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 60%, rgba(0,240,80,0.15));
+    pointer-events: none;
+  }
+  .media-call-visual .badge {
+    position: absolute; top: 32px; right: 32px;
+    background: var(--media-a); color: var(--ink); padding: 18px 22px;
+    font-family: var(--display); font-weight: 700; font-size: 18px; line-height: 1; letter-spacing: -0.01em;
+    text-transform: uppercase;
+    transform: rotate(-4deg);
+    box-shadow: 6px 6px 0 var(--media-b);
+  }
+  .media-call-visual .meta {
+    position: absolute; bottom: 32px; left: 32px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; color: var(--bone);
+    background: rgba(10,10,10,0.6); padding: 8px 12px;
+  }
+
+  /* === Buttons === */
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 18px 26px; border: 0; cursor: pointer;
+    font-family: var(--display); font-weight: 700; font-size: 15px; letter-spacing: 0.04em; text-transform: uppercase;
+    transition: transform .2s, box-shadow .2s, background .2s, color .2s;
+  }
+  .btn-lime { background: var(--lime); color: var(--ink); }
+  .btn-lime:hover { transform: translate(-3px, -3px); box-shadow: 6px 6px 0 var(--bone); }
+  .btn-bone { background: var(--bone); color: var(--ink); }
+  .btn-bone:hover { transform: translate(-3px, -3px); box-shadow: 6px 6px 0 var(--lime); }
+  .btn-ghost-light { background: transparent; color: var(--bone); border: 1.5px solid var(--bone); }
+  .btn-ghost-light:hover { background: var(--bone); color: var(--ink); }
+  .btn-ghost-dark { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
+  .btn-ghost-dark:hover { background: var(--ink); color: var(--lime); }
+
+  /* === Contact === */
+  .contact { background: var(--bone); color: var(--ink); padding: 140px 0; }
+  .contact h2 { font-family: var(--display); font-weight: 800; font-size: clamp(48px, 7vw, 120px); line-height: 0.94; letter-spacing: -0.03em; text-transform: uppercase; margin: 24px 0 48px; }
+  .contact h2 em { font-style: normal; -webkit-text-stroke: 2px var(--ink); -webkit-text-fill-color: var(--bone); }
+  .contact-lead { font-family: var(--serif); font-style: italic; font-size: 28px; line-height: 1.2; max-width: 760px; margin-bottom: 64px; }
+  .contact-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .contact-card {
+    background: var(--ink); color: var(--bone); padding: 32px;
+    display: flex; flex-direction: column; gap: 16px; min-height: 360px;
+    transition: transform .25s, box-shadow .25s;
+    position: relative; overflow: hidden;
+  }
+  .contact-card:hover { transform: translate(-4px, -4px); }
+  .contact-card .lbl { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; color: rgba(244,241,236,0.55); }
+  .contact-card h3 { font-family: var(--display); font-weight: 700; font-size: 28px; line-height: 1.05; letter-spacing: -0.02em; text-transform: uppercase; }
+  .contact-card p { font-family: var(--sans); font-size: 14px; line-height: 1.5; color: rgba(244,241,236,0.78); }
+  .contact-card .accent { width: 36px; height: 36px; }
+  .contact-card.book .accent { background: var(--cyan); }
+  .contact-card.partner .accent { background: var(--lime); }
+  .contact-card.email .accent { background: var(--magenta); }
+  .contact-card .arrow {
+    margin-top: auto; font-family: var(--display); font-weight: 700; font-size: 26px; align-self: flex-end;
+    transition: transform .25s;
+  }
+  .contact-card:hover .arrow { transform: translate(8px, -8px); }
+  .contact-card.book:hover { box-shadow: 8px 8px 0 var(--cyan); }
+  .contact-card.partner:hover { box-shadow: 8px 8px 0 var(--lime); }
+  .contact-card.email:hover { box-shadow: 8px 8px 0 var(--magenta); }
+
+  /* Partner form */
+  .partner-form {
+    margin-top: 80px;
+    border-top: 1px solid var(--ink); padding-top: 48px;
+    display: grid; grid-template-columns: 0.4fr 1fr; gap: 48px;
+  }
+  .partner-form h3 { font-family: var(--display); font-weight: 800; font-size: 40px; line-height: 0.96; letter-spacing: -0.025em; text-transform: uppercase; }
+  .partner-form .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field.full { grid-column: 1 / -1; }
+  .field label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--dirt); }
+  .field input, .field select, .field textarea {
+    background: transparent; border: 0; border-bottom: 1.5px solid var(--ink);
+    padding: 12px 0; font-family: var(--sans); font-size: 18px; color: var(--ink); outline: none;
+    transition: border-color .2s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--magenta); }
+  .field textarea { min-height: 100px; resize: vertical; }
+  .form-actions { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; margin-top: 16px; }
+  .form-meta { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; color: var(--dirt); }
+
+  /* === Socials + footer === */
+  .socials { background: var(--ink); color: var(--bone); padding: 80px 0; border-top: 1px solid var(--ink-3); }
+  .socials-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 0; border-top: 1px solid rgba(244,241,236,0.18); }
+  .social-cell {
+    border-right: 1px solid rgba(244,241,236,0.18);
+    padding: 28px; display: flex; flex-direction: column; gap: 8px;
+    transition: background .2s;
+    cursor: pointer;
+  }
+  .social-cell:last-child { border-right: 0; }
+  .social-cell:hover { background: var(--ink-2); }
+  .social-cell .platform { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; color: var(--dirt); }
+  .social-cell .handle { font-family: var(--display); font-weight: 700; font-size: 24px; line-height: 1.05; letter-spacing: -0.02em; text-transform: uppercase; }
+  .social-cell .handle .arrow { color: var(--lime); margin-left: 6px; transition: transform .2s; display: inline-block; }
+  .social-cell:hover .handle .arrow { transform: translateX(6px); }
+
+  footer { background: var(--ink); color: var(--bone); padding: 60px 0 36px; border-top: 1px solid var(--ink-3); }
+  .footer-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 32px; padding-bottom: 48px; border-bottom: 1px solid var(--ink-3); }
+  .footer-col h4 { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--dirt); margin-bottom: 16px; }
+  .footer-col a { display: block; padding: 6px 0; color: rgba(244,241,236,0.85); font-size: 14px; }
+  .footer-col a:hover { color: var(--lime); }
+  .footer-mark { height: 60px; margin-bottom: 18px; }
+  .footer-tag { font-family: var(--serif); font-style: italic; font-size: 18px; line-height: 1.2; color: rgba(244,241,236,0.7); max-width: 320px; }
+  .footer-bottom { padding-top: 24px; display: flex; justify-content: space-between; font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; color: rgba(244,241,236,0.45); }
+
+  /* === Reveal animations === */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity .9s ease, transform .9s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  .reveal.delay-1 { transition-delay: .1s; }
+  .reveal.delay-2 { transition-delay: .2s; }
+  .reveal.delay-3 { transition-delay: .3s; }
+
+  /* Responsive */
+  @media (max-width: 980px) {
+    .container, .nav { padding-left: 24px; padding-right: 24px; }
+    .nav-links { display: none; }
+    .manifesto-grid, .founder-grid, .pillar-panel, .partner-form, .media-call-grid { grid-template-columns: 1fr; gap: 24px; }
+    .pillars-track { width: 300vw; }
+    .problems-grid, .stats-grid, .funder-grid, .why-grid { grid-template-columns: 1fr 1fr; }
+    .demand-grid, .contact-cards, .socials-row { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .pillar-num { font-size: 50vw; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="#top" class="logo-wrap"><img src="assets/gate8-logo.png" alt="GATE8" class="logo dark" /><img src="assets/gate8-logo-inverse.png" alt="" aria-hidden="true" class="logo light" /></a>
+  <ul class="nav-links">
+    <li><a href="#manifesto">What</a></li>
+    <li><a href="#pillars">Pillars</a></li>
+    <li><a href="#founder">Founder</a></li>
+    <li><a href="#impact">Impact</a></li>
+    <li><a href="#media">Media</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="#contact">Partner with us →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-content">
+    <div>
+      <h1>
+        WIN FROM<br/>
+        <span class="offset" data-text="ANYWHERE.">ANYWHERE.</span>
+      </h1>
+      <div class="hero-tag">A mindset brand and movement built on one truth — no matter where you start, you can still cross the line first.</div>
+    </div>
+    <div class="lane-strip" aria-label="The eight lanes">
+      <div><span class="num">01</span>Lane</div>
+      <div><span class="num">02</span>Lane</div>
+      <div><span class="num">03</span>Lane</div>
+      <div><span class="num">04</span>Lane</div>
+      <div><span class="num">05</span>Lane</div>
+      <div><span class="num">06</span>Lane</div>
+      <div><span class="num">07</span>Lane</div>
+      <div><span class="num">08</span>Outsider</div>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>SCROLL</span><span class="bar"></span></div>
+</section>
+
+<!-- MARQUEE 1 -->
+<div class="marquee dark">
+  <div class="marquee-track">
+    <span>WIN FROM ANYWHERE<span class="dot"></span><span class="accent">GATE 8</span><span class="dot"></span>THE OUTSIDER LANE<span class="dot"></span>HARDEST START · STRONGEST WIN<span class="dot"></span></span>
+    <span>WIN FROM ANYWHERE<span class="dot"></span><span class="accent">GATE 8</span><span class="dot"></span>THE OUTSIDER LANE<span class="dot"></span>HARDEST START · STRONGEST WIN<span class="dot"></span></span>
+  </div>
+</div>
+
+<!-- MANIFESTO -->
+<section class="manifesto" id="manifesto">
+  <div class="container">
+    <div class="manifesto-grid">
+      <div class="reveal"><div class="section-eyebrow">01 — WHAT</div></div>
+      <div>
+        <h2 class="reveal">A racing term.<br/>A <em>mindset</em>.<br/>A movement.</h2>
+        <p class="reveal">In BMX, there are eight lanes. The inside lanes are the golden spots — the shortest line to the corner, the best chance to win. Then there's the last one. The outsider lane. The one nobody wants.</p>
+        <p class="reveal delay-1"><strong>Gate8 is more than a BMX racing term.</strong> It's the idea that no matter where you start — a tough childhood, a setback, a relapse, a bad lane — you can still cross the line first.</p>
+        <p class="reveal delay-2">Inspired by 9× BMX World Champion Shanaze Reade, Gate8 turns the toughest start into a universal symbol of resilience. <strong>You can win from anywhere.</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LANE COUNTER -->
+<section class="lane-counter">
+  <div class="container">
+    <div class="reveal"><div class="section-eyebrow">02 — THE EIGHT LANES</div></div>
+    <h2 class="reveal">From the inside line<br/>to the outsider — <span style="color:var(--lime)">all eight win.</span></h2>
+    <div class="lc-row" id="laneCounter">
+      <div class="lc-cell"><div class="fill" data-fill="100"></div><div class="n">1</div><div class="lbl">INSIDE</div></div>
+      <div class="lc-cell"><div class="fill" data-fill="92"></div><div class="n">2</div><div class="lbl">FAST</div></div>
+      <div class="lc-cell"><div class="fill" data-fill="80"></div><div class="n">3</div><div class="lbl">CLEAN</div></div>
+      <div class="lc-cell"><div class="fill" data-fill="68"></div><div class="n">4</div><div class="lbl">MID</div></div>
+      <div class="lc-cell"><div class="fill" data-fill="56"></div><div class="n">5</div><div class="lbl">MID</div></div>
+      <div class="lc-cell"><div class="fill" data-fill="42"></div><div class="n">6</div><div class="lbl">WIDE</div></div>
+      <div class="lc-cell"><div class="fill" data-fill="28"></div><div class="n">7</div><div class="lbl">WIDER</div></div>
+      <div class="lc-cell eight"><div class="fill" data-fill="100"></div><div class="n">8</div><div class="lbl">OUTSIDER · WINS</div></div>
+    </div>
+    <div class="lc-caption reveal">The hardest lane to win from. Furthest from the first corner. <em>And yet — sometimes, it's the one that wins.</em></div>
+  </div>
+</section>
+
+<!-- PINNED PILLARS -->
+<section class="pillars-pin" id="pillars">
+  <div style="height: 300vh;">
+    <div class="stage">
+      <div class="pillars-track" id="pillarsTrack">
+
+        <div class="pillar-panel labs">
+          <div class="pillar-num">01</div>
+          <div class="pillar-left">
+            <img class="lockup" src="assets/gate8-labs-inverse.png" alt="GATE8 Labs" />
+            <div class="tag" style="color: var(--labs-a);">Pillar 01 · Programmes</div>
+            <h3>Let anyone<br/>become.</h3>
+            <p>Programmes, pop-ups, educational sessions and academies — for "lion-hearts" and those who aspire to be one.</p>
+            <ul>
+              <li>Skills-development &amp; mentorship pipelines</li>
+              <li>Pop-up "LAB" events with athletes &amp; creatives</li>
+              <li>School and community-led training programmes</li>
+              <li>Strategic partnerships with sports brands</li>
+            </ul>
+          </div>
+          <div class="pillar-right">
+            <div class="frame">
+              <img src="assets/shanaze-academy.png" alt="Academy mentorship" />
+            </div>
+            <div class="echo a"></div>
+            <div class="echo b"></div>
+            <div class="meta">LABS · ACADEMY 2025</div>
+          </div>
+        </div>
+
+        <div class="pillar-panel media">
+          <div class="pillar-num">02</div>
+          <div class="pillar-left">
+            <img class="lockup" src="assets/gate8-media-inverse.png" alt="GATE8 Media" />
+            <div class="tag" style="color: var(--media-a);">Pillar 02 · Storytelling</div>
+            <h3>The voice<br/>that reaches.</h3>
+            <p>A storytelling engine — podcasts, documentaries and digital content that reach the next girl or boy in the window dreaming, or lost in identity.</p>
+            <ul>
+              <li>Original podcast slate &amp; documentary series</li>
+              <li>Athlete &amp; creator-led content programs</li>
+              <li>Brand partnership &amp; media-agent representation</li>
+              <li>Lived-experience storytelling at scale</li>
+            </ul>
+          </div>
+          <div class="pillar-right">
+            <div class="frame">
+              <img src="assets/shanaze-bench.png" alt="Founder portrait" />
+            </div>
+            <div class="echo a"></div>
+            <div class="echo b"></div>
+            <div class="meta">MEDIA · S01 · IN PRODUCTION</div>
+          </div>
+        </div>
+
+        <div class="pillar-panel foundation">
+          <div class="pillar-num">03</div>
+          <div class="pillar-left">
+            <img class="lockup" src="assets/gate8-foundation-inverse.png" alt="GATE8 Foundation" />
+            <div class="tag" style="color: var(--foundation-a);">Pillar 03 · Impact</div>
+            <h3>The work<br/>that holds.</h3>
+            <p>A social-impact arm grounded in lived experience — providing subsidised access, safeguarding, and long-term community pathways.</p>
+            <ul>
+              <li>Subsidised access to Labs programmes</li>
+              <li>Safeguarding &amp; long-term mentorship</li>
+              <li>Local-authority &amp; school partnerships</li>
+              <li>Foundation-grant and philanthropic routes</li>
+            </ul>
+          </div>
+          <div class="pillar-right">
+            <div class="frame">
+              <img src="assets/shanaze-portrait-jersey.png" alt="Founder Shanaze Reade" />
+            </div>
+            <div class="echo a"></div>
+            <div class="echo b"></div>
+            <div class="meta">FOUNDATION · IMPACT 2025+</div>
+          </div>
+        </div>
+
+      </div>
+      <div class="pillar-progress">
+        <div class="dot active" data-i="0">01 · LABS</div>
+        <div class="dot" data-i="1">02 · MEDIA</div>
+        <div class="dot" data-i="2">03 · FOUNDATION</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE 2 -->
+<div class="marquee lime">
+  <div class="marquee-track">
+    <span>HARDEST LANE<span class="dot"></span>STRONGEST WIN<span class="dot"></span>THE COMEBACK LANE<span class="dot"></span>BUILT FROM LIVED EXPERIENCE<span class="dot"></span></span>
+    <span>HARDEST LANE<span class="dot"></span>STRONGEST WIN<span class="dot"></span>THE COMEBACK LANE<span class="dot"></span>BUILT FROM LIVED EXPERIENCE<span class="dot"></span></span>
+  </div>
+</div>
+
+<!-- PROBLEMS -->
+<section class="problems" id="why">
+  <div class="container">
+    <div class="reveal"><div class="section-eyebrow">03 — THE PROBLEMS WE'RE SOLVING</div></div>
+    <h2 class="reveal">Five fault lines.<br/>One movement.</h2>
+    <div class="problems-grid">
+      <div class="problem-cell reveal">
+        <div class="num">01</div>
+        <div>
+          <div class="title">Decline in youth resilience</div>
+          <div class="body">Young people struggle to cope with pressure, identity and modern life demands.</div>
+        </div>
+      </div>
+      <div class="problem-cell reveal delay-1">
+        <div class="num">02</div>
+        <div>
+          <div class="title">Inequality of opportunity</div>
+          <div class="body">Talent is everywhere, but access, resources and pathways remain deeply unequal.</div>
+        </div>
+      </div>
+      <div class="problem-cell reveal delay-2">
+        <div class="num">03</div>
+        <div>
+          <div class="title">A mental-health epidemic</div>
+          <div class="body">Rising anxiety, addiction and burnout are overwhelming communities and services.</div>
+        </div>
+      </div>
+      <div class="problem-cell reveal delay-3">
+        <div class="num">04</div>
+        <div>
+          <div class="title">No real performance &amp; wellbeing spaces</div>
+          <div class="body">High-impact support is scarce, expensive and not built for real people.</div>
+        </div>
+      </div>
+      <div class="problem-cell reveal delay-3">
+        <div class="num">05</div>
+        <div>
+          <div class="title">Exploited talent pipelines</div>
+          <div class="body">Young talent is used, discarded and unsupported beyond commercial value.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY NOW -->
+<section class="why-now">
+  <div class="container why-now-inner">
+    <div class="reveal"><div class="section-eyebrow" style="color: var(--lime)">04 — WHY NOW</div></div>
+    <h2 class="reveal">The cultural moment<br/>has finally caught up<br/>with the work.</h2>
+    <div class="why-grid">
+      <div class="why-cell reveal"><div class="marker"></div><h3>Lived experience<br/>is the new authority</h3><p>Cultural demand has shifted from polished institutions toward authentic, lived storytelling.</p></div>
+      <div class="why-cell reveal delay-1"><div class="marker"></div><h3>Resilience is on every<br/>employer's brief</h3><p>Companies prioritise mental wellbeing and adaptability as core hiring traits, not soft skills.</p></div>
+      <div class="why-cell reveal delay-2"><div class="marker"></div><h3>Communities want<br/>safer, purpose-led spaces</h3><p>Demand for accessible, mission-driven programmes is outstripping public-sector supply.</p></div>
+      <div class="why-cell reveal delay-3"><div class="marker"></div><h3>Influence has moved<br/>to individuals</h3><p>Storytelling power has shifted from institutions to people — and Gate8 was built that way from day one.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section class="founder" id="founder">
+  <div class="founder-grid">
+    <div class="founder-img">
+      <img src="assets/shanaze-portrait-jersey.png" alt="Shanaze Reade — Founder" id="founderImg" />
+      <div class="corner-mark"></div>
+    </div>
+    <div class="founder-content">
+      <div class="reveal"><div class="section-eyebrow">05 — FOUNDER</div></div>
+      <div class="name reveal">Shanaze<br/>Reade.</div>
+      <div class="title reveal delay-1">Founder · Lived experience first</div>
+      <div class="bio reveal delay-2">"I didn't come from the inside lane. I came from Gate 8. So I built something for everyone else who's racing from there."</div>
+      <div class="founder-creds reveal delay-3">
+        <div class="row"><div class="num">9×</div><div class="label">BMX World Champion</div></div>
+        <div class="row"><div class="num">2×</div><div class="label">Track Cycling World Champion</div></div>
+        <div class="row"><div class="num">2×</div><div class="label">Olympian (Beijing &amp; London)</div></div>
+        <div class="row"><div class="num">·</div><div class="label">Lived experience in identity, addiction, ADHD &amp; reinvention</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<section class="ticker">
+  <div class="container">
+    <div class="ticker-quote" id="tickerQuote">"You don't <span class="c">need</span> the inside lane. You need the <span class="m">nerve</span> to commit before the drop even hits."</div>
+    <div class="ticker-controls">
+      <button id="tickerPrev" aria-label="Previous">‹</button>
+      <span id="tickerIdx">01 / 04</span>
+      <button id="tickerNext" aria-label="Next">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT STATS -->
+<section class="stats" id="impact">
+  <div class="container">
+    <div class="reveal"><div class="section-eyebrow">06 — THE IMPACT WE'RE BUILDING</div></div>
+    <h2 class="reveal">Numbers we're<br/>building toward.</h2>
+    <div class="stats-grid">
+      <div class="stat-cell echo reveal">
+        <div class="lbl">PEOPLE / YEAR · TARGET</div>
+        <div class="num" data-target="100">100K</div>
+        <div class="desc">Supported through skills, mentorship and partnerships across Labs, Media and Foundation.</div>
+      </div>
+      <div class="stat-cell reveal delay-1">
+        <div class="lbl">CHAMPIONSHIPS</div>
+        <div class="num" data-target="9">9×</div>
+        <div class="desc">BMX World Championships behind the founder — credibility built on the track.</div>
+      </div>
+      <div class="stat-cell reveal delay-2">
+        <div class="lbl">PILLARS</div>
+        <div class="num" data-target="3">3</div>
+        <div class="desc">Labs · Media · Foundation — one ecosystem, three interlocking arms.</div>
+      </div>
+      <div class="stat-cell reveal delay-3">
+        <div class="lbl">CORE VALUES</div>
+        <div class="num" data-target="6">6</div>
+        <div class="desc">Lived experience first. Radical inclusion. Performance with purpose. Recovery &amp; resilience. Community over ego. Creativity &amp; truth.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMAND -->
+<section class="demand">
+  <div class="container">
+    <div class="reveal"><div class="section-eyebrow" style="color: var(--cyan)">07 — THE DEMAND WE SEE</div></div>
+    <h2 class="reveal">Four audiences,<br/>one clear ask:<br/>more of this, please.</h2>
+    <div class="demand-grid">
+      <div class="demand-cell reveal">
+        <div class="icon">B</div>
+        <div>
+          <h3>Brands</h3>
+          <p>Want authentic, lived-experience storytelling grounded in resilience, identity and high performance.</p>
+        </div>
+      </div>
+      <div class="demand-cell reveal delay-1">
+        <div class="icon">F</div>
+        <div>
+          <h3>Families &amp; communities</h3>
+          <p>Need accessible, affordable, high-quality sport and wellbeing provision close to home.</p>
+        </div>
+      </div>
+      <div class="demand-cell reveal delay-2">
+        <div class="icon">S</div>
+        <div>
+          <h3>Schools</h3>
+          <p>Want behaviour, resilience and wellbeing interventions that hold up under real classroom conditions.</p>
+        </div>
+      </div>
+      <div class="demand-cell reveal delay-3">
+        <div class="icon">Y</div>
+        <div>
+          <h3>Young people</h3>
+          <p>Particularly neurodivergent, disadvantaged or at-risk groups need safe pathways and serious mentorship.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FUNDER VALUE PROP -->
+<section class="funder-value">
+  <div class="container funder-value-inner">
+    <div class="reveal"><div class="section-eyebrow">08 — VALUE TO FUNDERS &amp; PARTNERS</div></div>
+    <h2 class="reveal">Why Gate8 is the<br/>partner you've been<br/>looking for.</h2>
+    <div class="funder-grid">
+      <div class="funder-cell reveal">
+        <div class="num">01</div>
+        <h3>Transforming lives</h3>
+        <p>Direct, measurable impact on young people, families and communities — through accessible education, movement and wellbeing.</p>
+      </div>
+      <div class="funder-cell reveal delay-1">
+        <div class="num">02</div>
+        <h3>Authentic leadership</h3>
+        <p>Founded by Shanaze Reade — 9× World Champion, 2× Olympian — with lived experience in identity, addiction, ADHD &amp; reinvention.</p>
+      </div>
+      <div class="funder-cell reveal delay-2">
+        <div class="num">03</div>
+        <h3>Scalable &amp; sustainable</h3>
+        <p>Labs generates commercial revenue. Foundation scales access. Media builds global brand equity. The model holds.</p>
+      </div>
+      <div class="funder-cell reveal delay-3">
+        <div class="num">04</div>
+        <h3>Multi-sector fit</h3>
+        <ul>
+          <li>Local Authorities</li>
+          <li>MATs / schools / alt-provision</li>
+          <li>Sports &amp; health brands</li>
+          <li>Corporate wellbeing clients</li>
+          <li>Foundations &amp; philanthropic partners</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEDIA CALL -->
+<section class="media-call" id="media">
+  <div class="media-call-grid">
+    <div class="media-call-content">
+      <img class="lockup" src="assets/gate8-media-inverse.png" alt="GATE8 Media" />
+      <div class="reveal"><div class="section-eyebrow" style="color: var(--media-a)">09 — FOR ATHLETES &amp; CREATORS</div></div>
+      <h2 class="reveal">Tell your story.<br/>Keep your <em>voice</em>.</h2>
+      <div class="lead reveal">Gate8 Media is a new kind of agency — for sports influencers, athletes and creators with a story worth telling. Lived-experience first. Talent-led. Funder-friendly.</div>
+      <div class="media-call-bullets reveal delay-1">
+        <div class="row"><div class="n">A.</div><div>Original podcasts &amp; documentary slots — produced and distributed at scale.</div></div>
+        <div class="row"><div class="n">B.</div><div>Brand-partnership rep — values-aligned deals, no exploitation.</div></div>
+        <div class="row"><div class="n">C.</div><div>Cross-pollination with Labs &amp; Foundation work — your story, in the room with funders.</div></div>
+      </div>
+      <div class="media-call-actions reveal delay-2">
+        <a href="#contact" class="btn btn-lime">Apply as talent →</a>
+        <a href="#contact" class="btn btn-ghost-light">Brand partnerships →</a>
+      </div>
+    </div>
+    <div class="media-call-visual">
+      <img src="assets/shanaze-bench.png" alt="" />
+      <div class="badge">Now signing<br/>S01 talent</div>
+      <div class="meta">GATE8 MEDIA · TALENT LIST · 2025/26</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="reveal"><div class="section-eyebrow">10 — WORK WITH GATE8</div></div>
+    <h2 class="reveal">Let's <em>build</em><br/>something real.</h2>
+    <div class="contact-lead reveal">Whether you're a foundation, a school, a brand or a young person with a story — there's a way in. Pick the lane that fits.</div>
+    <div class="contact-cards">
+      <a href="#" class="contact-card book reveal">
+        <div class="lbl">CONTACT · 01</div>
+        <div class="accent"></div>
+        <h3>Book a call.</h3>
+        <p>30 minutes with the team to walk through your context — schools, MATs, local authorities, programme partners.</p>
+        <div class="arrow">→</div>
+      </a>
+      <a href="#partner-form" class="contact-card partner reveal delay-1">
+        <div class="lbl">CONTACT · 02</div>
+        <div class="accent"></div>
+        <h3>Partner with us.</h3>
+        <p>Foundations, philanthropic partners, corporate wellbeing clients — start a partnership inquiry below.</p>
+        <div class="arrow">→</div>
+      </a>
+      <a href="mailto:hello@gate8.org" class="contact-card email reveal delay-2">
+        <div class="lbl">CONTACT · 03</div>
+        <div class="accent"></div>
+        <h3>Just email.</h3>
+        <p>Press, athletes, creators, anyone with a question. We read everything that comes in.</p>
+        <p style="font-family:var(--mono); font-size: 13px; letter-spacing: 0.12em; color: var(--lime); margin-top: 8px;">hello@gate8.org</p>
+        <div class="arrow">→</div>
+      </a>
+    </div>
+
+    <form class="partner-form" id="partner-form" onsubmit="event.preventDefault(); this.querySelector('button[type=submit]').textContent='Sent · we\'ll be in touch';">
+      <div>
+        <h3>Partnership<br/>inquiry.</h3>
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--dirt-deep); margin-top: 14px; max-width: 280px;">For schools, MATs, foundations, brands, local authorities and corporate wellbeing partners.</p>
+      </div>
+      <div class="form-grid">
+        <div class="field"><label>Name</label><input type="text" required /></div>
+        <div class="field"><label>Organisation</label><input type="text" required /></div>
+        <div class="field"><label>Role</label><input type="text" /></div>
+        <div class="field">
+          <label>Type of partner</label>
+          <select>
+            <option>Local Authority</option>
+            <option>School / MAT / Alternative provision</option>
+            <option>Foundation / Philanthropic partner</option>
+            <option>Sports or health brand</option>
+            <option>Corporate wellbeing</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field full"><label>Email</label><input type="email" required /></div>
+        <div class="field full"><label>Tell us about your context</label><textarea></textarea></div>
+        <div class="form-actions">
+          <div class="form-meta">WE REPLY WITHIN 3 WORKING DAYS</div>
+          <button type="submit" class="btn btn-ghost-dark">Send inquiry →</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- SOCIALS -->
+<section class="socials" id="socials">
+  <div class="container">
+    <div class="section-eyebrow" style="margin-bottom: 28px; color: rgba(244,241,236,0.6);">11 — FOLLOW THE MOVEMENT</div>
+    <div class="socials-row">
+      <a class="social-cell" href="#"><div class="platform">INSTAGRAM</div><div class="handle">@GATE8<span class="arrow">→</span></div></a>
+      <a class="social-cell" href="#"><div class="platform">TIKTOK</div><div class="handle">@GATE8<span class="arrow">→</span></div></a>
+      <a class="social-cell" href="#"><div class="platform">YOUTUBE</div><div class="handle">/GATE8<span class="arrow">→</span></div></a>
+      <a class="social-cell" href="#"><div class="platform">LINKEDIN</div><div class="handle">/GATE8<span class="arrow">→</span></div></a>
+      <a class="social-cell" href="#"><div class="platform">SPOTIFY</div><div class="handle">GATE8 MEDIA<span class="arrow">→</span></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <img src="assets/gate8-logo-inverse.png" alt="GATE8" class="footer-mark" />
+        <div class="footer-tag">A mindset brand and movement built on one truth — you can win from anywhere.</div>
+      </div>
+      <div class="footer-col">
+        <h4>Pillars</h4>
+        <a href="#pillars">Gate8 Labs</a>
+        <a href="#pillars">Gate8 Media</a>
+        <a href="#pillars">Gate8 Foundation</a>
+      </div>
+      <div class="footer-col">
+        <h4>Org</h4>
+        <a href="#manifesto">What is Gate8</a>
+        <a href="#founder">Founder</a>
+        <a href="#impact">Impact</a>
+        <a href="#contact">Partner</a>
+      </div>
+      <div class="footer-col">
+        <h4>Get in touch</h4>
+        <a href="mailto:hello@gate8.org">hello@gate8.org</a>
+        <a href="#contact">Book a call</a>
+        <a href="#contact">Partnership inquiry</a>
+        <a href="#media">Media · Talent applications</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 GATE8 LTD · UK</span>
+      <span>WIN FROM ANYWHERE</span>
+      <span>SITE v0.1 · MAY 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---- Nav solidify on scroll ----
+  const nav = document.getElementById('nav');
+  const onScroll = () => {
+    nav.classList.toggle('solid', window.scrollY > 60);
+
+    // ---- Parallax hero bg ----
+    const heroBg = document.getElementById('heroBg');
+    if (heroBg && window.scrollY < window.innerHeight * 1.2) {
+      heroBg.style.transform = `translateY(${window.scrollY * 0.35}px) scale(${1 + window.scrollY * 0.0004})`;
+    }
+
+    // ---- Pinned pillars track ----
+    const pin = document.querySelector('.pillars-pin');
+    const track = document.getElementById('pillarsTrack');
+    if (pin && track) {
+      const rect = pin.getBoundingClientRect();
+      const pinHeight = pin.offsetHeight - window.innerHeight; // 200vh of scroll
+      let p = (-rect.top) / pinHeight;
+      p = Math.max(0, Math.min(1, p));
+      const max = (track.scrollWidth - window.innerWidth);
+      track.style.transform = `translateX(${-(p * max)}px)`;
+
+      // progress dots
+      const dots = document.querySelectorAll('.pillar-progress .dot');
+      const i = p < 0.34 ? 0 : p < 0.67 ? 1 : 2;
+      dots.forEach((d, k) => d.classList.toggle('active', k === i));
+    }
+
+    // ---- Founder image subtle parallax ----
+    const founderImg = document.getElementById('founderImg');
+    if (founderImg) {
+      const r = founderImg.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) {
+        const p = (window.innerHeight - r.top) / (window.innerHeight + r.height);
+        founderImg.style.transform = `translateY(${(p - 0.5) * -40}px) scale(1.06)`;
+      }
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // ---- Reveal on scroll ----
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ---- Lane counter fill on enter ----
+  const laneIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.fill').forEach((f, i) => {
+          setTimeout(() => f.style.height = f.dataset.fill + '%', i * 90);
+        });
+        laneIO.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  const lc = document.getElementById('laneCounter');
+  if (lc) laneIO.observe(lc);
+
+  // ---- Quote ticker ----
+  const quotes = [
+    `"You don't <span class='c'>need</span> the inside lane. You need the <span class='m'>nerve</span> to commit before the drop even hits."`,
+    `"The hardest lane to win from. <span class='l'>And yet</span> — sometimes, it's the one that wins."`,
+    `"Talent is everywhere. <span class='c'>Access isn't</span>. That's the gap Gate8 closes."`,
+    `"We give people the tools to <span class='m'>stay in the race</span> — and move forward on their own terms."`
+  ];
+  let qi = 0;
+  const qEl = document.getElementById('tickerQuote');
+  const qIdx = document.getElementById('tickerIdx');
+  function setQuote(i) {
+    qi = (i + quotes.length) % quotes.length;
+    qEl.style.opacity = 0;
+    setTimeout(() => {
+      qEl.innerHTML = quotes[qi];
+      qIdx.textContent = String(qi + 1).padStart(2, '0') + ' / ' + String(quotes.length).padStart(2, '0');
+      qEl.style.opacity = 1;
+    }, 250);
+  }
+  document.getElementById('tickerPrev').addEventListener('click', () => setQuote(qi - 1));
+  document.getElementById('tickerNext').addEventListener('click', () => setQuote(qi + 1));
+  setInterval(() => setQuote(qi + 1), 7000);
+
+  // ---- Stat number animate-in ----
+  const statIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      const target = el.dataset.target;
+      const original = el.textContent;
+      let n = 0;
+      const t = parseInt(target, 10);
+      const dur = 1100;
+      const start = performance.now();
+      function step(now) {
+        const p = Math.min(1, (now - start) / dur);
+        const v = Math.floor(p * t);
+        el.textContent = original.replace(/^\d+/, v);
+        if (p < 1) requestAnimationFrame(step);
+        else el.textContent = original;
+      }
+      requestAnimationFrame(step);
+      statIO.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stat-cell .num[data-target]').forEach(n => statIO.observe(n));
+</script>
+
+</body>
+</html>
