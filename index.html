@@ -374,10 +374,10 @@
   .founder-content .title { font-family: var(--mono); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--dirt); margin-top: 12px; }
   .founder-content .bio { font-family: var(--serif); font-style: italic; font-size: 24px; line-height: 1.22; margin: 32px 0; max-width: 540px; }
   .founder-creds { display: grid; gap: 14px; max-width: 520px; }
-  .founder-creds .row { display: grid; grid-template-columns: 60px 1fr; gap: 14px; padding: 12px 0; border-top: 1px solid var(--ink); align-items: baseline; }
+  .founder-creds .row { display: grid; grid-template-columns: 60px 1fr; gap: 14px; padding: 12px 0; border-top: 1px solid var(--ink); align-items: center; }
   .founder-creds .row:last-child { border-bottom: 1px solid var(--ink); }
   .founder-creds .num { font-family: var(--display); font-weight: 700; font-size: 26px; line-height: 1; letter-spacing: -0.02em; color: var(--ink); position: relative; }
-  .founder-creds .num::after { content: ""; position: absolute; right: 6px; bottom: 4px; width: 4px; height: 4px; background: var(--magenta); }
+  .founder-creds .num::after { content: ""; position: absolute; right: 6px; top: 50%; transform: translateY(-50%); width: 4px; height: 4px; background: var(--magenta); }
   .founder-creds .label { font-family: var(--sans); font-size: 14px; line-height: 1.4; }
 
   /* Quote ticker */
@@ -1033,7 +1033,7 @@
         <div class="row"><div class="num">9×</div><div class="label">BMX World Champion</div></div>
         <div class="row"><div class="num">2×</div><div class="label">Track Cycling World Champion</div></div>
         <div class="row"><div class="num">2×</div><div class="label">Olympian (Beijing &amp; London)</div></div>
-        <div class="row"><div class="num">·</div><div class="label">Lived experience in identity, addiction, ADHD &amp; reinvention</div></div>
+        <div class="row"><div class="num">9</div><div class="label">years and counting of lived experience in identity, addiction, ADHD &amp; reinvention</div></div>
       </div>
     </div>
   </div>
