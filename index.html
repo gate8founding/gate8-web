@@ -558,6 +558,18 @@
   .partner-form-desc { font-family: var(--sans); font-size: 14px; color: var(--dirt-deep); margin-top: 14px; max-width: 280px; line-height: 1.6; }
   .form-meta { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; color: var(--dirt); }
 
+  /* Booking calendar embed */
+  .book-cal {
+    margin-top: 80px;
+    border-top: 1px solid var(--ink); padding-top: 48px;
+    display: grid; grid-template-columns: 0.4fr 1fr; gap: 48px;
+  }
+  .book-cal-intro { display: flex; flex-direction: column; }
+  .book-cal h3 { font-family: var(--display); font-weight: 800; font-size: 40px; line-height: 0.96; letter-spacing: -0.025em; text-transform: uppercase; }
+  .book-cal-desc { font-family: var(--sans); font-size: 14px; color: var(--dirt-deep); margin-top: 14px; max-width: 280px; line-height: 1.6; }
+  .book-cal-embed { position: relative; }
+  .book-cal-embed iframe { width: 100%; height: 700px; border: none; display: block; }
+
   /* HubDub embed */
   .partner-form-embed {
     position: relative;
@@ -625,6 +637,7 @@
     /* Grids → 2 col or 1 col */
     .manifesto-grid, .founder-grid, .media-call-grid { grid-template-columns: 1fr; gap: 0; }
     .pillar-panel { grid-template-columns: 1fr; gap: 32px; }
+    .book-cal { grid-template-columns: 1fr; gap: 32px; }
     .partner-form { grid-template-columns: 1fr; gap: 32px; }
     .problems-grid { grid-template-columns: 1fr 1fr; }
     .stats-grid { grid-template-columns: 1fr 1fr; }
@@ -749,6 +762,9 @@
     .contact-lead { font-size: 19px; margin-bottom: 40px; }
     .contact-cards { grid-template-columns: 1fr; }
     .contact-card { min-height: 200px; }
+    .book-cal { margin-top: 48px; padding-top: 32px; }
+    .book-cal h3 { font-size: 30px; }
+    .book-cal-embed iframe { height: 760px; }
     .partner-form { margin-top: 48px; padding-top: 32px; }
     .partner-form h3 { font-size: 30px; }
     .partner-form-embed iframe { height: 920px; }
@@ -1188,7 +1204,7 @@
     <h2 class="reveal">Let's <em>build</em><br/>something real.</h2>
     <div class="contact-lead reveal">Whether you're a foundation, a school, a brand or a young person with a story, there's a way in. Pick the lane that fits.</div>
     <div class="contact-cards">
-      <a href="#" class="contact-card book reveal">
+      <a href="#book-a-call" class="contact-card book reveal">
         <div class="lbl">CONTACT · 01</div>
         <div class="accent"></div>
         <h3>Book a call.</h3>
@@ -1210,6 +1226,23 @@
         <p style="font-family:var(--mono); font-size: 13px; letter-spacing: 0.12em; color: var(--lime); margin-top: 8px;">james@wearegate8.com</p>
         <div class="arrow">→</div>
       </a>
+    </div>
+
+    <div class="book-cal" id="book-a-call">
+      <div class="book-cal-intro">
+        <h3>Book a<br/>call.</h3>
+        <p class="book-cal-desc">30 minutes with the team to walk through your context: schools, MATs, local authorities, programme partners.</p>
+        <p class="form-meta" style="margin-top:32px;">WE REPLY WITHIN 2 WORKING DAYS</p>
+      </div>
+      <div class="book-cal-embed">
+        <iframe
+          src="https://link.hubdub.io/widget/booking/a8fYNPGy0e04NmNenUwI"
+          id="a8fYNPGy0e04NmNenUwI_1779898059404"
+          scrolling="no"
+          style="overflow:hidden;"
+          allowtransparency="true">
+        </iframe>
+      </div>
     </div>
 
     <div class="partner-form" id="partner-form">
