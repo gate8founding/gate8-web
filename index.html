@@ -553,20 +553,21 @@
     border-top: 1px solid var(--ink); padding-top: 48px;
     display: grid; grid-template-columns: 0.4fr 1fr; gap: 48px;
   }
+  .partner-form-intro { display: flex; flex-direction: column; }
   .partner-form h3 { font-family: var(--display); font-weight: 800; font-size: 40px; line-height: 0.96; letter-spacing: -0.025em; text-transform: uppercase; }
-  .partner-form .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .field { display: flex; flex-direction: column; gap: 6px; }
-  .field.full { grid-column: 1 / -1; }
-  .field label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--dirt); }
-  .field input, .field select, .field textarea {
-    background: transparent; border: 0; border-bottom: 1.5px solid var(--ink);
-    padding: 12px 0; font-family: var(--sans); font-size: 18px; color: var(--ink); outline: none;
-    transition: border-color .2s;
-  }
-  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--magenta); }
-  .field textarea { min-height: 100px; resize: vertical; }
-  .form-actions { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; margin-top: 16px; }
+  .partner-form-desc { font-family: var(--sans); font-size: 14px; color: var(--dirt-deep); margin-top: 14px; max-width: 280px; line-height: 1.6; }
   .form-meta { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; color: var(--dirt); }
+
+  /* HubDub embed */
+  .partner-form-embed {
+    position: relative;
+  }
+  .partner-form-embed iframe {
+    width: 100%;
+    height: 788px;
+    border: none;
+    display: block;
+  }
 
   /* === Socials + footer === */
   .socials { background: var(--ink); color: var(--bone); padding: 80px 0; border-top: 1px solid var(--ink-3); }
@@ -1047,34 +1048,32 @@
       </a>
     </div>
 
-    <form class="partner-form" id="partner-form" onsubmit="event.preventDefault(); this.querySelector('button[type=submit]').textContent='Sent · we\'ll be in touch';">
-      <div>
+    <div class="partner-form" id="partner-form">
+      <div class="partner-form-intro">
         <h3>Partnership<br/>inquiry.</h3>
-        <p style="font-family: var(--sans); font-size: 14px; color: var(--dirt-deep); margin-top: 14px; max-width: 280px;">For schools, MATs, foundations, brands, local authorities and corporate wellbeing partners.</p>
+        <p class="partner-form-desc">For schools, MATs, foundations, brands, local authorities and corporate wellbeing partners.</p>
+        <p class="form-meta" style="margin-top:32px;">WE REPLY WITHIN 3 WORKING DAYS</p>
       </div>
-      <div class="form-grid">
-        <div class="field"><label>Name</label><input type="text" required /></div>
-        <div class="field"><label>Organisation</label><input type="text" required /></div>
-        <div class="field"><label>Role</label><input type="text" /></div>
-        <div class="field">
-          <label>Type of partner</label>
-          <select>
-            <option>Local Authority</option>
-            <option>School / MAT / Alternative provision</option>
-            <option>Foundation / Philanthropic partner</option>
-            <option>Sports or health brand</option>
-            <option>Corporate wellbeing</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="field full"><label>Email</label><input type="email" required /></div>
-        <div class="field full"><label>Tell us about your context</label><textarea></textarea></div>
-        <div class="form-actions">
-          <div class="form-meta">WE REPLY WITHIN 3 WORKING DAYS</div>
-          <button type="submit" class="btn btn-ghost-dark">Send inquiry →</button>
-        </div>
+      <div class="partner-form-embed">
+        <iframe
+          src="https://link.hubdub.io/widget/form/mYWBR5IBk9UN0GkoAppv"
+          id="inline-mYWBR5IBk9UN0GkoAppv"
+          data-layout="{'id':'INLINE'}"
+          data-trigger-type="alwaysShow"
+          data-trigger-value=""
+          data-activation-type="alwaysActivated"
+          data-activation-value=""
+          data-deactivation-type="neverDeactivate"
+          data-deactivation-value=""
+          data-form-name="Gate8"
+          data-height="788"
+          data-layout-iframe-id="inline-mYWBR5IBk9UN0GkoAppv"
+          data-form-id="mYWBR5IBk9UN0GkoAppv"
+          title="Gate8"
+          allowtransparency="true">
+        </iframe>
       </div>
-    </form>
+    </div>
   </div>
 </section>
 
@@ -1238,6 +1237,8 @@
   }, { threshold: 0.5 });
   document.querySelectorAll('.stat-cell .num[data-target]').forEach(n => statIO.observe(n));
 </script>
+
+<script src="https://link.hubdub.io/js/form_embed.js"></script>
 
 </body>
 </html>
