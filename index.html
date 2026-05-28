@@ -562,8 +562,13 @@
   .book-cal {
     margin-top: 80px;
     border-top: 1px solid var(--ink); padding-top: 48px;
-    display: grid; grid-template-columns: 0.4fr 1fr; gap: 48px;
+    display: none; grid-template-columns: 0.4fr 1fr; gap: 48px;
+    opacity: 0; transition: opacity 0.4s ease;
   }
+  .book-cal.open { display: grid; }
+  .book-cal.visible { opacity: 1; }
+  .book-cal-confirmed { display: none; text-align: center; padding: 48px 0; font-family: var(--mono); font-size: 13px; letter-spacing: 0.12em; color: var(--dirt); }
+  .book-cal-confirmed.show { display: block; }
   .book-cal-intro { display: flex; flex-direction: column; }
   .book-cal h3 { font-family: var(--display); font-weight: 800; font-size: 40px; line-height: 0.96; letter-spacing: -0.025em; text-transform: uppercase; }
   .book-cal-desc { font-family: var(--sans); font-size: 14px; color: var(--dirt-deep); margin-top: 14px; max-width: 280px; line-height: 1.6; }
@@ -1227,6 +1232,7 @@
       </a>
     </div>
 
+    <div class="book-cal-confirmed" id="bookConfirmed">BOOKING CONFIRMED · WE'LL SEE YOU THEN →</div>
     <div class="book-cal" id="book-a-call">
       <div class="book-cal-intro">
         <h3>Book a<br/>call.</h3>
@@ -1407,6 +1413,43 @@
   document.getElementById('tickerPrev').addEventListener('click', () => setQuote(qi - 1));
   document.getElementById('tickerNext').addEventListener('click', () => setQuote(qi + 1));
   setInterval(() => setQuote(qi + 1), 7000);
+
+  // ---- Book a call toggle ----
+  const bookCard = document.querySelector('.contact-card.book');
+  const bookCal  = document.getElementById('book-a-call');
+  const bookConf = document.getElementById('bookConfirmed');
+
+  bookCard.addEventListener('click', function(e) {
+    e.preventDefault();
+    bookCal.style.display = 'grid';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        bookCal.classList.add('open', 'visible');
+        bookCal.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  });
+
+  // Listen for HubDub booking confirmation postMessage
+  window.addEventListener('message', function(e) {
+    const d = e.data;
+    if (!d) return;
+    const isConfirmed =
+      d.event === 'appointmentBooked' ||
+      d.event === 'booking_confirmed' ||
+      d.event === 'booking_form_submitted' ||
+      d.type  === 'booking_confirmed' ||
+      (typeof d === 'string' && d.includes('booking'));
+    if (isConfirmed) {
+      bookCal.classList.remove('visible');
+      setTimeout(() => {
+        bookCal.classList.remove('open');
+        bookCal.style.display = 'none';
+        bookConf.classList.add('show');
+        bookConf.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 400);
+    }
+  });
 
   // ---- Stat number animate-in ----
   const statIO = new IntersectionObserver((entries) => {
