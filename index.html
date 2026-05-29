@@ -162,16 +162,16 @@
   .marquee.dark { background: var(--ink); color: var(--bone); border-color: rgba(244,241,236,0.15); }
   .marquee.lime { background: var(--lime); color: var(--ink); }
   .marquee-track {
-    display: flex; gap: 56px; white-space: nowrap;
+    display: flex; gap: 0; white-space: nowrap;
     font-family: var(--display); font-weight: 800; font-size: clamp(48px, 7vw, 110px);
     letter-spacing: -0.03em; text-transform: uppercase;
     animation: marquee 10s linear infinite;
   }
-  .marquee-track > span { display: inline-flex; align-items: center; gap: 56px; }
+  .marquee-track > span { display: inline-flex; align-items: center; gap: 56px; padding-right: 56px; }
   .marquee-track .dot { width: 18px; height: 18px; background: currentColor; border-radius: 50%; flex-shrink: 0; }
   @keyframes marquee {
     from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
+    to { transform: translateX(-33.333%); }
   }
   .marquee.dark .marquee-track .accent { color: var(--lime); }
 
@@ -787,6 +787,9 @@
   @media (max-width: 480px) {
     .nav-cta { display: inline-flex; font-size: 9px; padding: 8px 10px; letter-spacing: 0.03em; }
     .hero h1 { font-size: clamp(48px, 13vw, 72px); }
+    .marquee-track { font-size: 28px; animation-duration: 14s; }
+    .marquee-track > span { gap: 28px; padding-right: 28px; }
+    .marquee-track .dot { width: 8px; height: 8px; }
     .lc-row { grid-template-columns: repeat(2, 1fr); height: auto; }
     .lc-cell { min-height: 120px; }
     .stats-grid { grid-template-columns: 1fr; }
@@ -843,6 +846,7 @@
 <!-- MARQUEE 1 -->
 <div class="marquee dark">
   <div class="marquee-track">
+    <span>WIN FROM ANYWHERE<span class="dot"></span><span class="accent">GATE 8</span><span class="dot"></span>THE OUTSIDER LANE<span class="dot"></span>HARDEST START · STRONGEST WIN<span class="dot"></span></span>
     <span>WIN FROM ANYWHERE<span class="dot"></span><span class="accent">GATE 8</span><span class="dot"></span>THE OUTSIDER LANE<span class="dot"></span>HARDEST START · STRONGEST WIN<span class="dot"></span></span>
     <span>WIN FROM ANYWHERE<span class="dot"></span><span class="accent">GATE 8</span><span class="dot"></span>THE OUTSIDER LANE<span class="dot"></span>HARDEST START · STRONGEST WIN<span class="dot"></span></span>
   </div>
@@ -973,6 +977,7 @@
 <!-- MARQUEE 2 -->
 <div class="marquee lime">
   <div class="marquee-track">
+    <span>HARDEST LANE<span class="dot"></span>STRONGEST WIN<span class="dot"></span>THE COMEBACK LANE<span class="dot"></span>BUILT FROM LIVED EXPERIENCE<span class="dot"></span></span>
     <span>HARDEST LANE<span class="dot"></span>STRONGEST WIN<span class="dot"></span>THE COMEBACK LANE<span class="dot"></span>BUILT FROM LIVED EXPERIENCE<span class="dot"></span></span>
     <span>HARDEST LANE<span class="dot"></span>STRONGEST WIN<span class="dot"></span>THE COMEBACK LANE<span class="dot"></span>BUILT FROM LIVED EXPERIENCE<span class="dot"></span></span>
   </div>
