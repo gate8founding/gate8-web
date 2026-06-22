@@ -621,7 +621,9 @@
   .footer-col a:hover { color: var(--lime); }
   .footer-mark { height: 60px; margin-bottom: 18px; }
   .footer-tag { font-family: var(--sans); font-size: 18px; line-height: 1.2; color: rgba(244,241,236,0.7); max-width: 320px; }
-  .footer-bottom { padding-top: 24px; display: flex; justify-content: space-between; font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; color: rgba(244,241,236,0.45); }
+  .footer-bottom { padding-top: 24px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; color: rgba(244,241,236,0.45); }
+  .footer-bottom a { color: rgba(244,241,236,0.45); text-decoration: none; }
+  .footer-bottom a:hover { color: var(--lime); }
 
   /* === Reveal animations === */
   .reveal { opacity: 0; transform: translateY(40px); transition: opacity .9s ease, transform .9s ease; }
@@ -1352,6 +1354,7 @@
     <div class="footer-bottom">
       <span>© 2026 GATE8 LTD · UK</span>
       <span>WIN FROM ANYWHERE</span>
+      <span><a href="privacy.html">Privacy Policy</a> · <a href="cookies.html">Cookie Policy</a></span>
       <span>SITE v0.1 · MAY 2026</span>
     </div>
   </div>
