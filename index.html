@@ -587,6 +587,54 @@
   .book-cal-embed { position: relative; }
   .book-cal-embed iframe { width: 100%; height: 700px; border: none; display: block; }
 
+  /* Cookie consent gate over embedded forms */
+  .cookie-gate {
+    display: none;
+    position: absolute; inset: 0;
+    background: var(--bone);
+    flex-direction: column; align-items: center; justify-content: center; text-align: center;
+    padding: 32px; gap: 14px;
+    border: 1px solid var(--ink-3);
+  }
+  .cookie-gate.show { display: flex; }
+  .cookie-gate p { font-family: var(--sans); font-size: 14px; color: var(--ink); max-width: 320px; }
+  .cookie-gate-btn {
+    background: var(--lime); color: var(--ink); border: none; cursor: pointer;
+    padding: 12px 18px; font-family: var(--display); font-weight: 700; font-size: 12px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .cookie-gate-btn:hover { background: var(--ink); color: var(--bone); }
+  .cookie-gate-alt { font-size: 12px; color: var(--dirt-deep); }
+  .cookie-gate-alt a { color: var(--ink); text-decoration: underline; }
+
+  /* Cookie consent banner */
+  .cookie-banner {
+    display: none;
+    position: fixed; left: 20px; right: 20px; bottom: 20px; z-index: 999;
+    max-width: 620px; margin: 0 auto;
+    background: var(--ink); color: var(--bone);
+    border: 1px solid var(--ink-3);
+    padding: 22px 24px;
+    align-items: center; gap: 18px; flex-wrap: wrap;
+    box-shadow: 6px 6px 0 var(--lime);
+  }
+  .cookie-banner.show { display: flex; }
+  .cookie-banner p { font-family: var(--sans); font-size: 13px; line-height: 1.5; flex: 1 1 280px; color: rgba(244,241,236,0.85); }
+  .cookie-banner p a { color: var(--lime); text-decoration: underline; }
+  .cookie-banner-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .cookie-banner-actions button {
+    border: none; cursor: pointer; font-family: var(--display); font-weight: 700; font-size: 11px;
+    letter-spacing: 0.06em; text-transform: uppercase; padding: 11px 16px;
+  }
+  .cookie-accept { background: var(--lime); color: var(--ink); }
+  .cookie-accept:hover { background: var(--bone); }
+  .cookie-reject { background: transparent; color: var(--bone); border: 1px solid rgba(244,241,236,0.4) !important; }
+  .cookie-reject:hover { border-color: var(--bone) !important; }
+
+  @media (max-width: 640px) {
+    .cookie-banner { left: 12px; right: 12px; bottom: 12px; padding: 18px; }
+  }
+
   /* HubDub embed */
   .partner-form-embed {
     position: relative;
@@ -1271,12 +1319,18 @@
       </div>
       <div class="book-cal-embed">
         <iframe
-          src="https://link.hubdub.io/widget/booking/a8fYNPGy0e04NmNenUwI"
+          data-src="https://link.hubdub.io/widget/booking/a8fYNPGy0e04NmNenUwI"
           id="a8fYNPGy0e04NmNenUwI_1779898059404"
+          class="cookie-gated-iframe"
           scrolling="no"
           style="overflow:hidden;"
           allowtransparency="true">
         </iframe>
+        <div class="cookie-gate">
+          <p>This booking calendar uses cookies to work.</p>
+          <button type="button" class="cookie-gate-btn" data-consent-action="accept">Accept cookies &amp; load calendar</button>
+          <p class="cookie-gate-alt">Or just <a href="mailto:james@wearegate8.com">email us</a> directly.</p>
+        </div>
       </div>
     </div>
 
@@ -1288,8 +1342,9 @@
       </div>
       <div class="partner-form-embed">
         <iframe
-          src="https://link.hubdub.io/widget/form/mYWBR5IBk9UN0GkoAppv"
+          data-src="https://link.hubdub.io/widget/form/mYWBR5IBk9UN0GkoAppv"
           id="inline-mYWBR5IBk9UN0GkoAppv"
+          class="cookie-gated-iframe"
           data-layout="{'id':'INLINE'}"
           data-trigger-type="alwaysShow"
           data-trigger-value=""
@@ -1304,6 +1359,11 @@
           title="Gate8"
           allowtransparency="true">
         </iframe>
+        <div class="cookie-gate">
+          <p>This partnership form uses cookies to work.</p>
+          <button type="button" class="cookie-gate-btn" data-consent-action="accept">Accept cookies &amp; load form</button>
+          <p class="cookie-gate-alt">Or just <a href="mailto:james@wearegate8.com">email us</a> directly.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -1354,11 +1414,19 @@
     <div class="footer-bottom">
       <span>© 2026 GATE8 LTD · UK</span>
       <span>WIN FROM ANYWHERE</span>
-      <span><a href="privacy.html">Privacy Policy</a> · <a href="cookies.html">Cookie Policy</a></span>
+      <span><a href="privacy.html">Privacy Policy</a> · <a href="cookies.html">Cookie Policy</a> · <a href="#" id="manageCookies">Manage Cookies</a></span>
       <span>SITE v0.1 · MAY 2026</span>
     </div>
   </div>
 </footer>
+
+<div class="cookie-banner" id="cookieBanner">
+  <p>We use cookies for essential site function and for the booking/partnership forms below, provided via HubDub. See our <a href="cookies.html">Cookie Policy</a> for details.</p>
+  <div class="cookie-banner-actions">
+    <button type="button" class="cookie-reject" data-consent-action="reject">Reject</button>
+    <button type="button" class="cookie-accept" data-consent-action="accept">Accept</button>
+  </div>
+</div>
 
 <script>
   // ---- Nav solidify on scroll ----
@@ -1505,6 +1573,62 @@
     });
   }, { threshold: 0.5 });
   document.querySelectorAll('.stat-cell .num[data-target]').forEach(n => statIO.observe(n));
+
+  // ---- Cookie consent ----
+  const CONSENT_KEY = 'gate8_cookie_consent';
+  const cookieBanner = document.getElementById('cookieBanner');
+
+  function loadGatedIframes() {
+    document.querySelectorAll('iframe.cookie-gated-iframe').forEach(function (f) {
+      if (!f.getAttribute('src') && f.dataset.src) {
+        f.setAttribute('src', f.dataset.src);
+      }
+    });
+    document.querySelectorAll('.cookie-gate.show').forEach(function (g) {
+      g.classList.remove('show');
+    });
+  }
+
+  function showGatesIfNeeded() {
+    document.querySelectorAll('.cookie-gated-iframe').forEach(function (f) {
+      if (!f.getAttribute('src')) {
+        const gate = f.parentElement.querySelector('.cookie-gate');
+        if (gate) gate.classList.add('show');
+      }
+    });
+  }
+
+  function setConsent(value) {
+    localStorage.setItem(CONSENT_KEY, value);
+    cookieBanner.classList.remove('show');
+    if (value === 'accepted') {
+      loadGatedIframes();
+    } else {
+      showGatesIfNeeded();
+    }
+  }
+
+  const storedConsent = localStorage.getItem(CONSENT_KEY);
+  if (storedConsent === 'accepted') {
+    loadGatedIframes();
+  } else {
+    showGatesIfNeeded();
+    if (!storedConsent) cookieBanner.classList.add('show');
+  }
+
+  document.querySelectorAll('[data-consent-action]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      setConsent(btn.dataset.consentAction === 'accept' ? 'accepted' : 'rejected');
+    });
+  });
+
+  const manageCookiesLink = document.getElementById('manageCookies');
+  if (manageCookiesLink) {
+    manageCookiesLink.addEventListener('click', function (e) {
+      e.preventDefault();
+      cookieBanner.classList.add('show');
+    });
+  }
 </script>
 
 <script src="https://link.hubdub.io/js/form_embed.js"></script>
