@@ -715,8 +715,12 @@
     .socials-row { grid-template-columns: 1fr 1fr 1fr; }
     .footer-grid { grid-template-columns: 1fr 1fr; }
 
-    /* Pillars sticky scroll */
-    .pillars-track { width: 300vw; }
+    /* Pillars: horizontal swipe on mobile */
+    #pillarsScroller { height: 100vh !important; }
+    .pillars-pin .stage { overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .pillars-pin .stage::-webkit-scrollbar { display: none; }
+    .pillars-track { width: 300vw; transform: none !important; }
+    .pillar-panel { scroll-snap-align: start; flex-shrink: 0; width: 100vw; }
     .pillar-num { font-size: 50vw; }
     .pillar-right { max-height: 45vh; }
     .pillar-panel { padding: 100px 28px 60px; }
@@ -957,7 +961,7 @@
 
 <!-- PINNED PILLARS -->
 <section class="pillars-pin" id="pillars">
-  <div style="height: 300vh;">
+  <div id="pillarsScroller" style="height: 300vh;">
     <div class="stage">
       <div class="pillars-track" id="pillarsTrack">
 
@@ -1443,7 +1447,7 @@
     // ---- Pinned pillars track ----
     const pin = document.querySelector('.pillars-pin');
     const track = document.getElementById('pillarsTrack');
-    if (pin && track) {
+    if (pin && track && window.innerWidth > 980) {
       const rect = pin.getBoundingClientRect();
       const pinHeight = pin.offsetHeight - window.innerHeight; // 200vh of scroll
       let p = (-rect.top) / pinHeight;
@@ -1455,6 +1459,17 @@
       const dots = document.querySelectorAll('.pillar-progress .dot');
       const i = p < 0.34 ? 0 : p < 0.67 ? 1 : 2;
       dots.forEach((d, k) => d.classList.toggle('active', k === i));
+    }
+
+    // Mobile: update progress dots on horizontal swipe
+    if (window.innerWidth <= 980) {
+      const pillarsStage = document.querySelector('.pillars-pin .stage');
+      if (pillarsStage) {
+        const i = Math.round(pillarsStage.scrollLeft / window.innerWidth);
+        document.querySelectorAll('.pillar-progress .dot').forEach(function(d, k) {
+          d.classList.toggle('active', k === i);
+        });
+      }
     }
 
     // ---- Founder image subtle parallax ----
