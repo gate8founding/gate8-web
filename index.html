@@ -347,8 +347,7 @@
   .problem-cell {
     padding: 28px 22px;
     border-right: 1px solid var(--ink); border-bottom: 1px solid var(--ink);
-    display: flex; flex-direction: column; justify-content: space-between; gap: 18px;
-    min-height: 280px;
+    display: flex; flex-direction: column; gap: 12px;
     transition: background .25s, color .25s;
   }
   .problem-cell:hover { background: var(--ink); color: var(--bone); }
@@ -832,7 +831,7 @@
 
     /* Problems → 1 col */
     .problems-grid { grid-template-columns: 1fr; }
-    .problem-cell { min-height: 200px; }
+    .problem-cell { min-height: 0; }
 
     /* Why grid → 1 col */
     .why-grid { grid-template-columns: 1fr; gap: 0; }
