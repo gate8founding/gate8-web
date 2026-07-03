@@ -56,6 +56,8 @@
   .nav.solid .logo.dark { opacity: 0; }
   .nav.solid .logo.light { opacity: 1; }
   .nav .logo-wrap { position: relative; display: flex; align-items: center; line-height: 0; }
+  .logo-reg { font-family: var(--sans); font-size: 9px; font-weight: 700; color: var(--ink); align-self: flex-start; margin-top: 6px; margin-left: 2px; transition: color .25s; line-height: 1; }
+  .nav.solid .logo-reg { color: var(--bone); }
   .nav .logo { vertical-align: middle; }
   .nav-links { display: flex; gap: 28px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); }
   .nav-links a { transition: color .2s; }
@@ -916,7 +918,7 @@
 
 <!-- NAV -->
 <nav class="nav" id="nav">
-  <a href="#top" class="logo-wrap"><img src="assets/gate8-logo.png" alt="GATE8" class="logo dark" /><img src="assets/gate8-logo-inverse.png" alt="" aria-hidden="true" class="logo light" /></a>
+  <a href="#top" class="logo-wrap"><img src="assets/gate8-logo.png" alt="GATE8" class="logo dark" /><img src="assets/gate8-logo-inverse.png" alt="" aria-hidden="true" class="logo light" /><span class="logo-reg" aria-label="registered trademark">®</span></a>
   <ul class="nav-links">
     <li><a href="#manifesto">What</a></li>
     <li><a href="#pillars">Pillars</a></li>
