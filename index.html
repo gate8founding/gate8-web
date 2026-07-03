@@ -1483,6 +1483,24 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
+  // ---- Smooth marquees (RAF-driven, zero reset flicker) ----
+  document.querySelectorAll('.marquee').forEach(function(marquee) {
+    var track = marquee.querySelector('.marquee-track');
+    if (!track) return;
+    track.style.animation = 'none';
+    track.style.willChange = 'transform';
+    var span = track.querySelector('span');
+    var pos = 0;
+    var speed = 1.2; // px per frame at 60fps ≈ 72px/s
+    (function tick() {
+      pos -= speed;
+      var w = span.offsetWidth;
+      if (w && pos <= -w) pos += w;
+      track.style.transform = 'translateX(' + Math.round(pos) + 'px)';
+      requestAnimationFrame(tick);
+    })();
+  });
+
   // ---- Reveal on scroll ----
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
