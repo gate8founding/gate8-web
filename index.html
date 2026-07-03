@@ -310,6 +310,22 @@
     background: rgba(10,10,10,0.7); color: var(--bone);
   }
 
+  /* Swipe hint (mobile only) */
+  .pillar-swipe-hint {
+    display: none;
+    position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em;
+    color: rgba(244,241,236,0.55); z-index: 10;
+    pointer-events: none;
+    animation: swipe-pulse 1.6s ease-in-out infinite;
+    transition: opacity 0.5s;
+  }
+  .pillar-swipe-hint.hidden { opacity: 0; }
+  @keyframes swipe-pulse {
+    0%, 100% { transform: translateY(-50%) translateX(0); opacity: 0.55; }
+    50% { transform: translateY(-50%) translateX(6px); opacity: 1; }
+  }
+
   /* Pillar progress dots */
   .pillar-progress {
     position: absolute; bottom: 32px; right: 48px;
@@ -720,10 +736,18 @@
     .pillars-pin .stage { overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
     .pillars-pin .stage::-webkit-scrollbar { display: none; }
     .pillars-track { width: 300vw; transform: none !important; }
-    .pillar-panel { scroll-snap-align: start; flex-shrink: 0; width: 100vw; }
-    .pillar-num { font-size: 50vw; }
-    .pillar-right { max-height: 45vh; }
-    .pillar-panel { padding: 100px 28px 60px; }
+    .pillar-panel { scroll-snap-align: start; flex-shrink: 0; width: 100vw; padding: 80px 28px 100px; gap: 0; }
+    .pillar-right { display: none; }
+    .pillar-num { font-size: 50vw; top: 40px; right: 20px; }
+    .pillar-left .lockup { height: 72px; margin-bottom: 20px; }
+    .pillar-left h3 { font-size: clamp(40px, 11vw, 64px); margin: 14px 0 16px; }
+    .pillar-left p { font-size: 17px; line-height: 1.4; }
+    .pillar-left ul { margin-top: 16px; gap: 10px; }
+    /* Progress dots: centred at bottom on mobile */
+    .pillar-progress { bottom: 28px; right: 0; left: 0; justify-content: center; gap: 20px; }
+    /* Swipe hint */
+    .pillar-swipe-hint { display: flex; }
+    #pillarsScroller { position: relative; }
 
     /* Lane counter 8-col → 4-col */
     .lc-row { grid-template-columns: repeat(4, 1fr); height: 220px; }
@@ -1042,6 +1066,7 @@
         <div class="dot" data-i="1">02 · MEDIA</div>
         <div class="dot" data-i="2">03 · FOUNDATION</div>
       </div>
+      <div class="pillar-swipe-hint" id="pillarSwipeHint" aria-hidden="true">SWIPE ›</div>
     </div>
   </div>
 </section>
@@ -1482,6 +1507,30 @@
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  // ---- Mobile swipe hint: show on mobile, hide after first swipe ----
+  (function() {
+    if (window.innerWidth > 980) return;
+    const hint = document.getElementById('pillarSwipeHint');
+    const stage = document.querySelector('.pillars-pin .stage');
+    if (!hint || !stage) return;
+    var dismissed = false;
+    stage.addEventListener('scroll', function() {
+      if (!dismissed && stage.scrollLeft > 30) {
+        dismissed = true;
+        hint.classList.add('hidden');
+      }
+      // update dots
+      const i = Math.round(stage.scrollLeft / window.innerWidth);
+      document.querySelectorAll('.pillar-progress .dot').forEach(function(d, k) {
+        d.classList.toggle('active', k === i);
+      });
+      // hide hint on last panel
+      if (Math.round(stage.scrollLeft / window.innerWidth) >= 2) {
+        hint.classList.add('hidden');
+      }
+    }, { passive: true });
+  })();
 
   // ---- Smooth marquees (RAF-driven, zero reset flicker) ----
   document.querySelectorAll('.marquee').forEach(function(marquee) {
