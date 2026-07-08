@@ -387,6 +387,22 @@
   .why-cell h3 { font-family: var(--display); font-weight: 700; font-size: 22px; line-height: 1.1; text-transform: uppercase; letter-spacing: -0.015em; }
   .why-cell p { font-family: var(--sans); font-size: 14px; line-height: 1.55; color: rgba(244,241,236,0.7); }
 
+  .power-hour-wrap { margin-top: 80px; display: flex; justify-content: flex-start; }
+  .power-hour-badge {
+    display: inline-flex; flex-direction: column; gap: 10px;
+    background: var(--lime); color: var(--ink);
+    padding: 28px 36px; text-decoration: none;
+    transform: rotate(-2deg);
+    box-shadow: 8px 8px 0 rgba(210,255,0,0.25);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .power-hour-badge:hover { transform: rotate(0deg) scale(1.02); box-shadow: 12px 12px 0 rgba(210,255,0,0.35); }
+  .power-hour-title { font-family: var(--display); font-weight: 800; font-size: clamp(20px, 2.5vw, 32px); line-height: 1; text-transform: uppercase; letter-spacing: -0.02em; color: var(--ink); }
+  .power-hour-pricing { display: flex; align-items: center; gap: 16px; }
+  .ph-was { font-family: var(--mono); font-size: 13px; letter-spacing: 0.1em; text-decoration: line-through; opacity: 0.6; color: var(--ink); }
+  .ph-now { font-family: var(--display); font-weight: 800; font-size: 28px; color: var(--ink); letter-spacing: -0.02em; }
+  .power-hour-cta { font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink); opacity: 0.8; }
+
   /* === Founder === */
   .founder {
     background: var(--bone); color: var(--ink);
@@ -1180,6 +1196,13 @@
       <div class="why-cell reveal delay-1"><div class="marker"></div><h3>Resilience is on every<br/>employer's brief</h3><p>Companies prioritise mental wellbeing and adaptability as core hiring traits, not soft skills.</p></div>
       <div class="why-cell reveal delay-2"><div class="marker"></div><h3>Communities want<br/>safer, purpose-led spaces</h3><p>Demand for accessible, mission-driven programmes is outstripping public-sector supply.</p></div>
       <div class="why-cell reveal delay-3"><div class="marker"></div><h3>Influence has moved<br/>to individuals</h3><p>Storytelling power has shifted from institutions to people, and Gate8 was built that way from day one.</p></div>
+    </div>
+    <div class="power-hour-wrap reveal">
+      <a href="https://link.hubdub.io/widget/bookings/james-and-shanaze" target="_blank" rel="noopener" class="power-hour-badge">
+        <div class="power-hour-title">CEO &amp; Founder Power Hour</div>
+        <div class="power-hour-pricing"><span class="ph-was">Usually £200</span><span class="ph-now">Now £150</span></div>
+        <div class="power-hour-cta">Book your session →</div>
+      </a>
     </div>
   </div>
 </section>
