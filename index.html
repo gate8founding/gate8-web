@@ -926,6 +926,11 @@
     .social-cell { padding: 20px; }
     .social-cell .handle { font-size: 18px; }
 
+    /* Press */
+    .press { padding: 72px 0; }
+    .press-track { padding: 0 20px 20px; gap: 16px; }
+    .press-card { flex: 0 0 85vw; }
+
     /* Power Hour */
     .power-hour-wrap { flex-direction: column; align-items: flex-start; gap: 32px; margin-top: 56px; }
     .power-hour-badge { transform: rotate(-1deg); width: 100%; }
@@ -936,6 +941,47 @@
     .footer-grid { grid-template-columns: 1fr; gap: 40px; }
     .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
   }
+
+  /* ── Press ─────────────────────────────────────────── */
+  .press { padding: 120px 0; background: var(--ink); overflow: hidden; }
+  .press-track-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    cursor: grab;
+  }
+  .press-track-wrap::-webkit-scrollbar { display: none; }
+  .press-track {
+    display: flex;
+    gap: 24px;
+    padding: 0 max(48px, calc((100vw - 1280px)/2 + 48px)) 24px;
+    scroll-snap-type: x mandatory;
+    width: max-content;
+  }
+  .press-card {
+    scroll-snap-align: start;
+    flex: 0 0 420px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(244,241,236,0.15);
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--bone);
+    transition: border-color .2s;
+  }
+  .press-card:hover { border-color: var(--lime); }
+  .press-card-img {
+    width: 100%; aspect-ratio: 3/2; object-fit: cover; object-position: center top;
+    display: block;
+    filter: grayscale(20%);
+    transition: filter .3s;
+  }
+  .press-card:hover .press-card-img { filter: grayscale(0%); }
+  .press-card-body { padding: 28px 28px 32px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .press-pub { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--lime); }
+  .press-headline { font-family: var(--display); font-weight: 700; font-size: clamp(18px, 1.6vw, 22px); line-height: 1.2; }
+  .press-meta { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; color: var(--dirt); margin-top: auto; padding-top: 20px; display: flex; justify-content: space-between; align-items: center; }
+  .press-arrow { color: var(--lime); font-size: 18px; }
 
   /* --- 480px: small mobile --- */
   @media (max-width: 480px) {
@@ -1211,6 +1257,28 @@
         <div class="power-hour-cta">Book your session →</div>
       </a>
       <p class="power-hour-desc">We would love to help others develop what they are building, adding value through an accessible consultancy offer from two founders who've lived it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRESS -->
+<section class="press" id="press">
+  <div class="container">
+    <div class="reveal"><div class="section-eyebrow">IN THE PRESS</div></div>
+    <h2 class="reveal" style="font-family:var(--display);font-weight:800;font-size:clamp(36px,5vw,72px);line-height:1;margin:16px 0 48px;letter-spacing:-0.03em;">As seen in</h2>
+  </div>
+  <div class="press-track-wrap">
+    <div class="press-track">
+
+      <a class="press-card reveal" href="https://www.thetimes.com/sport/cycling/article/shanaze-reade-cyclings-golden-girl-alcohol-nearly-killed-her-536fhkclw" target="_blank" rel="noopener">
+        <img class="press-card-img" src="assets/shanaze-times-2026.jpg" alt="Shanaze Reade photographed for The Times" />
+        <div class="press-card-body">
+          <div class="press-pub">The Times</div>
+          <div class="press-headline">She was a cycling star then booze nearly killed her. Now she's boxing</div>
+          <div class="press-meta"><span>November 2026</span><span class="press-arrow">→</span></div>
+        </div>
+      </a>
+
     </div>
   </div>
 </section>
