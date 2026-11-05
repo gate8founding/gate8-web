@@ -926,14 +926,6 @@
     .social-cell { padding: 20px; }
     .social-cell .handle { font-size: 18px; }
 
-    /* Press */
-    .press { padding: 72px 0; }
-    .press-track-wrap { scroll-padding-left: 20px; }
-    .press-track { padding: 0 20px 20px; gap: 12px; }
-    .press-card { flex: 0 0 calc(100vw - 80px); }
-    .press-card-img { aspect-ratio: 16/9; }
-    .press-card-body { padding: 20px 20px 24px; }
-
     /* Power Hour */
     .power-hour-wrap { flex-direction: column; align-items: flex-start; gap: 32px; margin-top: 56px; }
     .power-hour-badge { transform: rotate(-1deg); width: 100%; }
@@ -986,6 +978,14 @@
   .press-meta { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; color: var(--dirt); margin-top: auto; padding-top: 20px; display: flex; justify-content: space-between; align-items: center; }
   .press-arrow { color: var(--lime); font-size: 18px; }
   .press-quote { font-family: var(--serif); font-style: italic; font-size: 17px; line-height: 1.5; color: rgba(244,241,236,0.6); border-left: 2px solid var(--lime); padding-left: 14px; margin-top: 12px; }
+
+  @media (max-width: 640px) {
+    .press { padding: 72px 0; }
+    .press-track { padding: 0 20px 20px; gap: 12px; }
+    .press-card { flex: 0 0 calc(100vw - 64px); }
+    .press-card-img { aspect-ratio: 16/9; }
+    .press-card-body { padding: 20px 20px 24px; }
+  }
 
   /* --- 480px: small mobile --- */
   @media (max-width: 480px) {
